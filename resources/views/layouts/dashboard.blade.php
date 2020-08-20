@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 <head>
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -37,7 +37,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="{{asset('assets/css/bootstrap-select.css.map')}}" rel="stylesheet" />
 
   <link href="{{asset('assets/css/bootstrap-select.css')}}" rel="stylesheet" />
-  
+
   <script src="{{asset('assets/js/core/jquery.min.js')}}"></script>
 </head>
 
@@ -72,7 +72,7 @@ The above copyright notice and this permission notice shall be included in all c
           InvSis
         </a></div>
       <div class="sidebar-wrapper">
-        
+
         <ul class="nav">
           <li class="nav-item active">
             <a class="nav-link" href="{{route('ini')}}">
@@ -98,6 +98,16 @@ The above copyright notice and this permission notice shall be included in all c
               <p>Productos</p>
             </a>
           </li>
+          @role('admin')
+         
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ route('ReUsuario') }}">
+            <i class="material-icons">how_to_reg</i>
+              <p>{{ __('Registrar Usuario') }}</p>
+            </a>
+          </li>
+       
+          @endrole
           <!--
           <li class="nav-item dropdown active">
             
@@ -119,7 +129,7 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
           <li class="nav-item active ">
             <a class="nav-link" href="{{route('compras')}}">
-              <i class="material-icons">monetization_on</i>
+              <i class="material-icons">store</i>
               <p>Compras</p>
             </a>
           </li>
@@ -132,7 +142,7 @@ The above copyright notice and this permission notice shall be included in all c
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-          <div class='navbar-form'> </div>
+            <div class='navbar-form'> </div>
             <a class="navbar-brand" href="javascript:;">Dashboard</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,7 +186,7 @@ The above copyright notice and this permission notice shall be included in all c
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                <a class="dropdown"><span class="nav-link">{{Auth::user()->name}}</span></a>
+                  <a class="dropdown"><span class="nav-link">{{Auth::user()->name}}</span></a>
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
@@ -303,12 +313,12 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
   </div>
   <!--   Core JS Files   -->
-  
+
   <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
   <script src="{{asset('assets/js/core/bootstrap-material-design.min.js')}}"></script>
   <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
   <!-- Plugin for the momentJs  -->
- <script src="{{asset('assets/js/plugins/moment.min.js')}}"></script>
+  <script src="{{asset('assets/js/plugins/moment.min.js')}}"></script>
   <!--  Plugin for Sweet Alert -->
   <script src="{{asset('assets/js/plugins/sweetalert2.js')}}"></script>
   <!-- Forms Validations Plugin -->
@@ -316,7 +326,7 @@ The above copyright notice and this permission notice shall be included in all c
   <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
   <script src="{{asset('assets/js/plugins/jquery.bootstrap-wizard.js')}}"></script>
   <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-    
+
   <script src="{{asset('assets/js/plugins/bootstrap-selectpicker.js')}}"></script>
   <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
   <script src="{{asset('assets/js/plugins/bootstrap-datetimepicker.min.js')}}"></script>
@@ -354,7 +364,7 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{{asset('assets/js/venta.js')}}" type="text/javascript"></script>
 
   <script src="{{asset('assets/js/compras.js')}}" type="text/javascript"></script>
-  
+
   <script>
     $(document).ready(function() {
       $().ready(function() {

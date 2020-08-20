@@ -10,7 +10,7 @@ class compras extends Model
 
     public $table="compras";
 
-    protected $fillable=['id_proveedor','fecha_factura','id_metodo_pago','precio_total','subtotal','pagado','descuento','devuelto','total_sin_descuento','iva','valor_iva','descripcion'];
+    protected $fillable=['id_user','id_proveedor','fecha_factura','id_metodo_pago','precio_total','subtotal','pagado','descuento','devuelto','total_sin_descuento','iva','valor_iva','descripcion'];
 
     public function relacion()
     {

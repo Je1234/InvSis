@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\VentasExport;
 use App\ventas;
@@ -19,13 +21,14 @@ class VentaController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function index()
-    {   $ventas = ventas::with('products')->paginate(5);
+    {   $ventas = ventas::where('id_user',Auth::user()->id)->with('products')->paginate(5);
         $tipos =DB::table('tipo_documentos')->get();
-        $products =DB::table('productos')->get();
-        $clientes =DB::table('clientes')->get();
+        $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $clientes =DB::table('clientes')->where('id_user',Auth::user()->id)->get();
 
-        $metodos =DB::table('metodo_pagos')->get();
+        $metodos =DB::table('metodo_pagos')->where('id_user',Auth::user()->id)->get();
      
         return view('ventas.VentaIndex',compact('products','clientes','metodos','tipos','ventas'));
     }

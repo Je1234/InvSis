@@ -16,6 +16,8 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->integer('id_producto',true)->unsigned();
             $table->integer('id_proveedor')->nullable();
+            $table->bigInteger('id_user')->nullable()->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->foreign('id_proveedor')->references('id_proveedor')->on('proveedores')->onDelete('no action')->onUpdate('no action');
             $table->integer('id_ubicacion')->nullable();
             $table->foreign('id_ubicacion')->references('id_ubicacion')->on('ubicaciones')->onDelete('no action')->onUpdate('no action');

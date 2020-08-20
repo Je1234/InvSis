@@ -1,3 +1,7 @@
+$('.form-submit-limitC').on('submit',function (){
+  $('.button-submit-limitC').attr('disabled','true');
+});
+
 //ELIMINAR VENTA
 $('#EliminarCompra').on('show.bs.modal',function(event){
 

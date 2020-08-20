@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\productos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -25,13 +25,14 @@ class ProductoController extends Controller
         $tipo = $request->get('tipo');
         $variablesurl = $request->only(['tipo','buscarPor']);
 
-        $productoB = productos::buscar($tipo, $busqueda)->paginate(10)->appends($variablesurl);
-        
-        $producto = productos::paginate(5);
+        $productoB = productos::buscar($tipo, $busqueda)->where('id_user',Auth::user()->id)->paginate(10)->appends($variablesurl);  
+            
+        $producto = productos::where('id_user',Auth::user()->id)->paginate(5);
+
         $results = productos::with('categorias')->get();
-        $categoria = DB::table('categorias')->get();
-        $ubicacion = DB::table('ubicaciones')->get();
-        $proveedor = DB::table('proveedores')->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
+        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
+        $proveedor = DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
              
        
         return view('productos.ProductoIndex', compact('producto', 'results','categoria','ubicacion','tipo','busqueda','productoB','proveedor'));
@@ -175,8 +176,9 @@ class ProductoController extends Controller
         $eliminarP = productos::findOrFail($id->id_producto);
         $eliminarc = storage_path() . '/app/public/uploads/' . $eliminarP->ruta_imagen;
 
+        
         //Eliminar imagen de producto si existe
-        if (file_exists($eliminarc)) 
+        if (file_exists($eliminarc) && $eliminarP->ruta_imagen != 'default.png') 
         {
             File::delete($eliminarc);
         }

@@ -14,7 +14,7 @@
     @endif
 
 
-    <form action="{{ route('compra.store')}}" class="form-submit-limit" id="form_compra" method="POST">
+    <form action="{{ route('compra.store')}}" class="form-submit-limitC" id="form_compra" method="POST">
         <div class="row">
             <div class="col-md-4">
 
@@ -94,7 +94,7 @@
                     </div>
                     <div class="card-body">
                         <!--Inicio Body-->
-
+                        <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                         @csrf
                         <div class="table-responsive">
                             <table class="table" id="products_table">
@@ -162,7 +162,7 @@
 
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <div class="form-group"><button type="submit" class="btn btn-primary btn-lg button-submit-limit" value="{{trans('global.save')}}">Realizar compra</button>
+                                            <div class="form-group"><button type="submit" class="btn btn-primary btn-lg button-submit-limitC" value="{{trans('global.save')}}">Realizar compra</button>
                                             </div>
                                         </div>
                                     </div>

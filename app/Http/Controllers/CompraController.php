@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ComprasExport;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\productos;
@@ -18,13 +19,13 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compra = compras::with('relacion')->paginate(5);
-        $products =DB::table('productos')->get();
-        $proveedores =DB::table('proveedores')->get();
-        $categoria =DB::table('categorias')->get();
-        $ubicacion =DB::table('ubicaciones')->get();
+        $compra = compras::where('id_user',Auth::user()->id)->with('relacion')->paginate(5);
+        $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
+        $categoria =DB::table('categorias')->where('id_user',Auth::user()->id)->get();
+        $ubicacion =DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
 
-        $metodos =DB::table('metodo_pagos')->get();
+        $metodos =DB::table('metodo_pagos')->where('id_user',Auth::user()->id)->get();
 
          return view('compras.CompraIndex',compact('compra','metodos','products','proveedores','categoria','ubicacion'));
         

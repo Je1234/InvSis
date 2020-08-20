@@ -23,9 +23,6 @@
                         </h1>
                         <h2>Aun no hay proveedores registrados</h2>
                     </div>
-
-
-
                     @elseif($proveedorB->isEmpty())
                     <div class="col-xs-12 col-md-12 error404 text center">
                         <h1>
@@ -149,6 +146,7 @@
                                     <!-- Formulario -->
                                     <form class="form-submit-limit" method="POST" action="{{route('proveedor.store')}}">
                                         @csrf
+                                        <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
 
                                         <div class="form-group">
                                             <label>Nombre</label>

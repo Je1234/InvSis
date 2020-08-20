@@ -180,7 +180,7 @@
                     <!-- Formulario -->
                     <form method="POST" class="form-submit-limit" action="{{route('cliente.store')}}" enctype="multipart/form-data">
                       @csrf
-
+                      <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                       <div class="form-group">
                         <label>N° documento</label>
                         <input type="text" name="documento" class="form-control" id="" placeholder="">

@@ -15,6 +15,8 @@ class CreateMetodoPagosTable extends Migration
     {
         Schema::create('metodo_pagos', function (Blueprint $table) {
             $table->integer('id_metodo_pago',true);
+            $table->bigInteger('id_user')->nullable()->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->string('nom_metodo_pago');
             $table->text('descripcion')->nullable();
             $table->timestamps();

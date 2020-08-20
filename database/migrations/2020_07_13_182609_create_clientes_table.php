@@ -16,7 +16,8 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->integer('id_documento')->unsigned();
             $table->primary('id_documento');
-            
+            $table->bigInteger('id_user')->nullable()->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->integer('id_tipo_documento')->nullable();
             $table->foreign('id_tipo_documento')
             ->references('id_tipo_documento')->on('tipo_documentos');

@@ -122,7 +122,9 @@
               </thead>
               <!--Imprimiendo lista de productos-->
               <tbody>
+               
                 @foreach( $productoB as $productI)
+               
                 <tr>
                   <td>
                     {{$productI->id_producto}}
@@ -161,7 +163,7 @@
                     </a>
                   </td>
                 </tr>
-
+                
                 @endforeach
 
               </tbody>
@@ -192,26 +194,27 @@
                     <!-- Formulario -->
                     <form method="POST" class="form-submit-limit" action="{{route('producto.store')}}" enctype="multipart/form-data">
                       @csrf
-
+                      <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                       <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="" placeholder="">
+                        <input type="text" name="nombre" class="form-control" >
                       </div>
                       <div class="form-group">
                         <label>Precio venta</label>
-                        <input type="number" name="precio_venta" class="form-control" id="" placeholder="">
+                        <input type="number" name="precio_venta" class="form-control">
+                        
                       </div>
                       <div class="form-group">
                         <label>Precio compra</label>
-                        <input type="number" name="precio_compra" class="form-control" id="" placeholder="">
+                        <input type="number" name="precio_compra" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Cantidad en stock</label>
-                        <input type="number" name="stock" class="form-control" id="" placeholder="">
+                        <input type="number" name="stock" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Marca</label>
-                        <input type="texts" name="marca" class="form-control" id="" placeholder="">
+                        <input type="texts" name="marca" class="form-control" >
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Proveedor</label>

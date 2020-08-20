@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('ini');
-})->middleware('auth')->name('ini');
+Route::get('/', 'HomeController@index')->name('ini')->middleware('auth');
 //Redireccionamiento a vista index categorias
 Route::get('/Compras', 'CompraController@index')->name('compras');
 //Recursos para CRUD productos
@@ -60,10 +58,14 @@ Route::get('/descargarExcelventa','VentaController@descargaExcel')->name('ExcelV
 
 Route::get('/descargarExcelcompra','CompraController@descargaExcel')->name('ExcelCompra');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/NuevoUsuario','HomeController@ReUsuario')->name('ReUsuario')->middleware('role:admin');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/Permisos', 'HomeController@RolesYperm')->name('Permisos')->middleware('role:admin');
+
+/*Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');*/

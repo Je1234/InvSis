@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\clientes;
@@ -16,9 +18,9 @@ class ClienteController extends Controller
         $tipoB=$request->get('tipo');
         $busqueda=$request->get('buscarPor');
         $variablesurl = $request->only(['tipo','buscarPor']);
-        $clientes= clientes::paginate(5);
+        $clientes= clientes::where('id_user',Auth::user()->id)->paginate(5);
         $tipos=DB::table('tipo_documentos')->get();
-        $clientesB = clientes::buscar($tipoB, $busqueda)->paginate(10)->appends($variablesurl);
+        $clientesB = clientes::buscar($tipoB, $busqueda)->where('id_user',Auth::user()->id)->paginate(10)->appends($variablesurl);
 
         return view ('clientes.ClienteIndex',compact('clientes','tipos','tipoB','busqueda','clientesB'));
     }
@@ -51,6 +53,7 @@ class ClienteController extends Controller
         $clientes->telefono=$request->telefono;
         $clientes->celular=$request->celular;
         $clientes->fecha_nacimiento=$request->fecha;
+        $clientes->id_user=$request->id_user;
         $clientes->save();
         return redirect()->route('cliente.index')->with('datos','Registro agregado correctamente');
 

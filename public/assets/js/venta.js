@@ -1,5 +1,5 @@
-$('.form-submit-limit').on('submit',function (){
-    $('.button-submit-limit').attr('disabled','true');
+$('.form-submit-limitV').on('submit',function (){
+  $('.button-submit-limitV').attr('disabled','true');
 });
 
 //DESCARGAR Excel

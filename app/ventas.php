@@ -9,7 +9,7 @@ class ventas extends Model
     protected $primaryKey="id_venta";
 
     public $table="ventas";
-    protected $fillable=['id_documento','fecha_factura','id_metodo_pago','precio_total','subtotal','pagado','descuento','devuelto','total_sin_descuento','iva','valor_iva','descripcion'];
+    protected $fillable=['id_user','id_documento','fecha_factura','id_metodo_pago','precio_total','subtotal','pagado','descuento','devuelto','total_sin_descuento','iva','valor_iva','descripcion'];
     public function products()
     {
 

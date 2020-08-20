@@ -15,6 +15,8 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->increments('id_compra');
+            $table->bigInteger('id_user')->nullable()->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->integer('id_proveedor')->nullable();
             $table->foreign('id_proveedor')->references('id_proveedor')->on('proveedores');
             $table->timestampTz('fecha_factura');

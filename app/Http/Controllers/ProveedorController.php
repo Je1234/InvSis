@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\proveedores;
 use Illuminate\Http\Request;
 use vendor\laravel\framework\src\Illuminate\Pagination\Environment;
@@ -21,14 +22,14 @@ class ProveedorController extends Controller
         $nombre=$request->get('buscarNom');
         $variableurl = $request->only(['buscarNom']);
         
-        $products = DB::table('productos')->get();
+        $products = DB::table('productos')->where('id_user',Auth::user()->id)->get();
         
         
-        $categoria = DB::table('categorias')->get();
-        $ubicacion = DB::table('ubicaciones')->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
+        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
 
-        $proveedorB= proveedores::buscarp($nombre)->paginate(5,['*'], 'prov')->appends($variableurl);
-        $proveedor= proveedores::paginate(5); 
+        $proveedorB= proveedores::buscarp($nombre)->where('id_user',Auth::user()->id)->paginate(5,['*'], 'prov')->appends($variableurl);
+        $proveedor= proveedores::where('id_user',Auth::user()->id)->paginate(5); 
         return view('proveedores.ProveedorIndex',compact('proveedor','proveedorB','nombre','products','categoria','ubicacion'));
 
         
@@ -58,6 +59,7 @@ class ProveedorController extends Controller
         $proveedor->direccion=$request->direccion;
         $proveedor->telefono=$request->telefono;
         $proveedor->estado=$request->estado;
+        $proveedor->id_user=$request->id_user;
         $proveedor->save();
 
         return redirect()->route('proveedor.index')->with('datos','Registro guardado correctamente');

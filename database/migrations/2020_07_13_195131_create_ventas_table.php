@@ -15,6 +15,8 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->increments('id_venta');
+            $table->bigInteger('id_user')->nullable()->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->integer('id_documento')->unsigned()->nullable();
             $table->foreign('id_documento')->references('id_documento')->on('clientes');
             $table->timestampTz('fecha_factura');
