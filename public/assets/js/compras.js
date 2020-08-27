@@ -2,7 +2,7 @@ $('.form-submit-limitC').on('submit',function (){
   $('.button-submit-limitC').attr('disabled','true');
 });
 
-//ELIMINAR VENTA
+//ELIMINAR COMPRA
 $('#EliminarCompra').on('show.bs.modal',function(event){
 
   var button = $(event.relatedTarget)
@@ -13,6 +13,76 @@ $('#EliminarCompra').on('show.bs.modal',function(event){
   modal.find('.modal-body #id_compra').val(id_compra);
 
 
+});
+
+//EDIITAR COMPRA
+$('#EditCompra').on('show.bs.modal',function(event){
+  
+  var button = $(event.relatedTarget)
+  var id_compra = button.data('id_compra')
+  var id_proveedor = button.data('id_proveedor')
+  var id_metodo_pago = button.data('id_metodo_pago')
+  var fecha = button.data('fecha')
+  var precio_total = button.data('precio_total')
+  var subtotal= button.data('subtotal')
+  var pagado = button.data('pagado')
+  var devuelto = button.data('devuelto')
+  var descuento = button.data('descuento')
+  var total_sin_descuento = button.data('total_sin_descuento')
+  var iva = button.data('iva')
+  
+  var modal = $(this)
+
+  modal.find('.modal-body #id_compra').val(id_compra);
+  modal.find('.modal-body #id_proveedorVC').val(id_proveedor);
+  modal.find('.modal-body #fecha_factura').val(fecha);
+  modal.find('.modal-body #id_metodo_pago').val(id_metodo_pago);
+  modal.find('.modal-body #precio_total').val(precio_total);
+  modal.find('.modal-body #subtotal').val(subtotal);
+  modal.find('.modal-body #pagado').val(pagado);
+  modal.find('.modal-body #devuelto').val(devuelto);
+  modal.find('.modal-body #descuento').val(descuento);
+  modal.find('.modal-body #total_sin_descuento').val(total_sin_descuento);
+  modal.find('.modal-body #iva').val(iva);
+  
+  $('select').selectpicker('refresh');
+  
+  
+});
+
+//VER COMPRA
+$('#VerCompra').on('show.bs.modal',function(event){
+  
+  var button = $(event.relatedTarget)
+  var id_compra = button.data('id_compra')
+  var id_proveedor = button.data('id_proveedor')
+  var id_metodo_pago = button.data('id_metodo_pago')
+  var fecha = button.data('fecha')
+  var precio_total = button.data('precio_total')
+  var subtotal= button.data('subtotal')
+  var pagado = button.data('pagado')
+  var devuelto = button.data('devuelto')
+  var descuento = button.data('descuento')
+  var total_sin_descuento = button.data('total_sin_descuento')
+  var iva = button.data('iva')
+  
+  var modal = $(this)
+
+  modal.find('.modal-body #id_compra').val(id_compra);
+  modal.find('.modal-body #id_proveedorVC').val(id_proveedor);
+  modal.find('.modal-body #fecha_factura').val(fecha);
+  modal.find('.modal-body #id_metodo_pago').val(id_metodo_pago);
+  modal.find('.modal-body #precio_total').val(precio_total);
+  modal.find('.modal-body #subtotal').val(subtotal);
+  modal.find('.modal-body #pagado').val(pagado);
+  modal.find('.modal-body #devuelto').val(devuelto);
+  modal.find('.modal-body #descuento').val(descuento);
+  modal.find('.modal-body #total_sin_descuento').val(total_sin_descuento);
+  modal.find('.modal-body #iva').val(iva);
+  
+  $('select').selectpicker('refresh');
+  
+  
 });
 
 //DESCARGAR EXCEL

@@ -14,10 +14,10 @@ class CreateVentasTable extends Migration
     public function up()
     {
         Schema::create('ventas', function (Blueprint $table) {
-            $table->increments('id_venta');
+            $table->BigIncrements('id_venta');
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
-            $table->integer('id_documento')->unsigned()->nullable();
+            $table->bigInteger('id_documento')->unsigned()->nullable();
             $table->foreign('id_documento')->references('id_documento')->on('clientes');
             $table->timestampTz('fecha_factura');
             $table->integer('id_metodo_pago')->nullable();
@@ -25,10 +25,10 @@ class CreateVentasTable extends Migration
             $table->float('precio_total',15,2)->nullable();
             $table->float('subtotal',15,2)->nullable();
             $table->float('pagado',15,2)->nullable();
-            $table->integer('descuento')->nullable();
-            $table->integer('devuelto')->nullable();
-            $table->integer('total_sin_descuento')->nullable();
-            $table->integer('iva')->nullable();
+            $table->bigInteger('descuento')->nullable();
+            $table->bigInteger('devuelto')->nullable();
+            $table->bigInteger('total_sin_descuento')->nullable();
+            $table->bigInteger('iva')->nullable();
             $table->float('valor_iva',15,2)->nullable();
             $table->text('descripcion')->nullable();
             $table->timestamps();

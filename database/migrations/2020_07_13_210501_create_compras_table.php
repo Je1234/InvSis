@@ -14,10 +14,10 @@ class CreateComprasTable extends Migration
     public function up()
     {
         Schema::create('compras', function (Blueprint $table) {
-            $table->increments('id_compra');
+            $table->BigIncrements('id_compra');
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
-            $table->integer('id_proveedor')->nullable();
+            $table->bigInteger('id_proveedor')->nullable();
             $table->foreign('id_proveedor')->references('id_proveedor')->on('proveedores');
             $table->timestampTz('fecha_factura');
             $table->integer('id_metodo_pago')->nullable();
@@ -26,8 +26,8 @@ class CreateComprasTable extends Migration
             $table->float('subtotal',15,2)->nullable();
             $table->float('pagado',15,2)->nullable();
             $table->integer('descuento')->nullable();
-            $table->integer('devuelto')->nullable();
-            $table->integer('total_sin_descuento')->nullable();
+            $table->bigInteger('devuelto')->nullable();
+            $table->bigInteger('total_sin_descuento')->nullable();
             $table->integer('iva')->nullable();
             $table->float('valor_iva',15,2)->nullable();
             $table->text('descripcion')->nullable();

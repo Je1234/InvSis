@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\proveedores;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use vendor\laravel\framework\src\Illuminate\Pagination\Environment;
 class ProveedorController extends Controller
 {
@@ -54,16 +55,30 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
 
-        $proveedor= new proveedores;
-        $proveedor->nombre=$request->nombre;
-        $proveedor->direccion=$request->direccion;
-        $proveedor->telefono=$request->telefono;
-        $proveedor->estado=$request->estado;
-        $proveedor->id_user=$request->id_user;
-        $proveedor->save();
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:80',
+            'direccion' => 'nullable|max:80',
+            'telefono' => 'nullable|max:20',
+        ],[
+            'nombre.required' => 'El nombre del proveedor es requerido',
+            'nombre.max' => 'El nombre del proveedor no debe exceder los :max caracteres',
+            'direccion.max' => 'La direccion no debe exceder los :max caracteres',
+            'telefono.max' => 'El telefono no debe exceder los :max caracteres',
+            
 
-        return redirect()->route('proveedor.index')->with('datos','Registro guardado correctamente');
+        ]);
 
+        if ($validatedData->passes()) {
+            $proveedores = $request->all();
+           proveedores::create($proveedores);
+
+           return redirect()->route('proveedor.index')->with('datos','Registro guardado correctamente');
+           
+        }else{
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
+       
     }
 
     /**
@@ -95,21 +110,30 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $proveedor= array(
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:80',
+            'direccion' => 'max:80',
+            'telefono' => 'max:20',
+        ],[
+            'nombre.required' => 'El nombre del proveedor es requerido',
+            'nombre.max' => 'El nombre del proveedor no debe exceder los :max caracteres',
+            'direccion.max' => 'La direccion no debe exceder los :max caracteres',
+            'telefono.max' => 'El telefono no debe exceder los :max caracteres',
+        ]);
 
-            "nombre"=>$request->nombre,
-            "direccion"=>$request->direccion,
-            "telefono"=>$request->telefono,
-            "estado"=>$request->estado,
+        if ($validatedData->passes()) {
+            $proveedores = $request->all();
             
-            
-        );
+            proveedores::findOrFail($request->id_proveedor)->update($proveedores);
 
-        proveedores::findOrFail($request->id_proveedor)->update($proveedor);
-        
-        return redirect()->route('proveedor.index')->with('datos','Regitro actualizado correctamente');
+           return redirect()->route('proveedor.index')->with('datos','Registro guardado correctamente');
+           
+        }
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+     
     }
 
     /**

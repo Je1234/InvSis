@@ -60,6 +60,8 @@ Route::get('/descargarExcelcompra','CompraController@descargaExcel')->name('Exce
 
 Route::get('/NuevoUsuario','HomeController@ReUsuario')->name('ReUsuario')->middleware('role:admin');
 
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\VentasExport;
@@ -28,7 +28,7 @@ class VentaController extends Controller
         $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
         $clientes =DB::table('clientes')->where('id_user',Auth::user()->id)->get();
 
-        $metodos =DB::table('metodo_pagos')->where('id_user',Auth::user()->id)->get();
+        $metodos =DB::table('metodo_pagos')->get();
      
         return view('ventas.VentaIndex',compact('products','clientes','metodos','tipos','ventas'));
     }
@@ -44,33 +44,59 @@ class VentaController extends Controller
     }
     public function storeCliente(Request $request)
     {
-        $clientesN= new clientes;
-        $clientesN->id_documento=$request->id_documento;
-        $clientesN->id_tipo_documento=$request->id_tipo_documento;
-        $clientesN->nombres=$request->nombres;
-        $clientesN->apellidos=$request->apellidos;
-        $clientesN->correo=$request->correo;
-        $clientesN->direccion=$request->direccion;
-        $clientesN->telefono=$request->telefono;
-        $clientesN->celular=$request->celular;
-        $clientesN->fecha_nacimiento=$request->fecha_nacimiento;
-        $clientesN->save();
-        $clientes =DB::table('clientes')->get();
-        $lista = view('ventas.Listaclientes', compact('clientes'))->render();
-        
-        $utf8_ansi2 = array(
-            '/ "} /'=> '',
-            '/\u00f1/' =>'ñ',
-            '/\u00d1/' =>'Ñ',
-            '/<\/option>/'=>'',
-            '/<\/option>"}/'=>'',
-            '/\r\n/'=>'',
-            );
-            $lista = preg_replace(array_keys($utf8_ansi2),array_values($utf8_ansi2),$lista);
+        $validatedData = Validator::make($request->all(), [
+            'id_documento' => 'required|min:8|max:20',
+            'nombres' => 'required|max:80',
+            'apellidos' => 'required|max:80',
+            'correo' => 'nullable|email|max:90',
+            'direccion' => 'nullable|max:80',
+            'telefono' => 'nullable|max:15',
+            'celular' => 'nullable|max:15',
+            'fecha_nacimiento' => 'nullable|date'
+        ],[
+            'id_documento.required' => 'El N° de documento es requerido',
+            'id_documento.max' => 'El N° de documento no debe exceder los :max caracteres',
+            'id_documento.min' => 'El N° de documento debe tener minimo :min caracteres',
+            'nombres.required' => 'Los nombres del cliente son requeridos',
+            'nombres.max' => 'El nombre del cliente no debe exceder los :max caracteres',
+            'apellidos.required' => 'Los apellidos del cliente son requeridos',
+            'apellidos.max' => 'El apellido del cliente no debe exceder los :max caracteres',
+            'correo.max' => 'El correo no debe exceder los :max caracteres',
+            'correo.email' => 'El correo debe ser una direccion valida',
+            'direccion.max' => 'La direccion no debe exceder los :max caracteres',
+            'telefono.max' => 'El telefono no debe exceder los :max caracteres',
+            'celular.max' => 'El celular no debe exceder los :max caracteres',
+            'fecha_nacimiento.date' => 'La fecha debe estar en un formato valido'
+            
 
-            $lista2= $lista;
+        ]);
+
+        if ($validatedData->passes()) {
+            $cliente = $request->all();
+           clientes::create($cliente);
+
+           $clientes =DB::table('clientes')->where('id_user',Auth::user()->id)->get();
+           $lista = view('ventas.Listaclientes', compact('clientes'))->render();
+           
+           $utf8_ansi2 = array(
+               '/ "} /'=> '',
+               '/\u00f1/' =>'ñ',
+               '/\u00d1/' =>'Ñ',
+               '/<\/option>/'=>'',
+               '/<\/option>"}/'=>'',
+               '/\r\n/'=>'',
+               );
+               $lista = preg_replace(array_keys($utf8_ansi2),array_values($utf8_ansi2),$lista);
+   
+               $lista2= $lista;
+           
+           return response()->json(array('html'=>$lista2));
+        }else{
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
+
         
-        return response()->json(compact('lista2'));
 
     }
   

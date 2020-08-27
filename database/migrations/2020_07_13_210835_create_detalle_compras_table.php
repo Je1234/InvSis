@@ -14,11 +14,11 @@ class CreateDetalleComprasTable extends Migration
     public function up()
     {
         Schema::create('detalle_compras', function (Blueprint $table) {
-            $table->unsignedInteger('id_compra');
+            $table->unsignedBigInteger('id_compra');
             $table->foreign('id_compra')->references('id_compra')->on('compras')->onDelete('cascade');
-            $table->unsignedInteger('id_producto');
+            $table->unsignedBigInteger('id_producto');
             $table->foreign('id_producto')->references('id_producto')->on('productos')->onDelete('cascade');
-            $table->integer('cantidad');
+            $table->bigInteger('cantidad');
             $table->bigInteger('total_p_producto')->nullable();
             $table->timestamps();
         });

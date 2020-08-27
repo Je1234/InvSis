@@ -3,14 +3,15 @@
 @section('content')
 
 <div class="row">
+
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-header card-header-warning card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">store</i>
+          <i class="material-icons">category</i>
         </div>
         <p class="card-category">Productos</p>
-        <h3 class="card-title"> {{ \DB::table('productos')->count()}}
+        <h3 class="card-title"> {{ \DB::table('productos')->where('id_user',Auth::user()->id)->count()}}
           <small></small>
         </h3>
       </div>
@@ -21,6 +22,7 @@
       </div>
     </div>
   </div>
+
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-header card-header-success card-header-icon">
@@ -37,22 +39,26 @@
       </div>
     </div>
   </div>
+
+
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-header card-header-danger card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">info_outline</i>
+          <i class="material-icons">store</i>
         </div>
         <p class="card-category">Compras Realizadas</p>
         <h3 class="card-title">{{ \DB::table('compras')->where('id_user',Auth::user()->id)->count()}}</h3>
       </div>
       <div class="card-footer">
         <div class="stats">
-          <i class="material-icons">local_offer</i> Tracked from Github
+          <i class="material-icons">monetization_on</i><a href="{{route('compras')}}">Ver compras..</a>
         </div>
       </div>
     </div>
   </div>
+
+
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-header card-header-info card-header-icon">
@@ -64,31 +70,30 @@
       </div>
       <div class="card-footer">
         <div class="stats">
-          <i class="material-icons">update</i> Just Updated
+          <i class="material-icons">monetization_on</i> <a href="{{route('venta')}}">Ver ventas..</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 <div class="row">
-​
+  ​
   <div class="col-xs-12 col-md-12 error404 mt-5 text-center">
     <h1>
 
       <small>¡Bienvenido {{Auth::User()->name}}!</small>
-      
+
     </h1>
     <h2>InvSis</h2>
     @role('admin')
-      <a type="button" href="{{route('Permisos')}}" class="btn btn-primary"><i class="material-icons">hourglass_full</i>Actualizar roles y permisos </a>
-      @endrole
+    <a type="button" href="{{route('Permisos')}}" class="btn btn-primary"><i class="material-icons">hourglass_full</i>Actualizar roles y permisos </a>
+    @endrole
   </div>
 
 </div>
 </div>
-</div>
-</div>
-
 
 
 @endsection

@@ -31,60 +31,111 @@
                     </div>
                     <div class="card-body">
 
-                        <form>
-                            <div class="form-group">
-                                <label for="">Cantidad pagada</label>
-                                <input type="text" class="form-control" id="pagado" name="pagado" placeholder="">
+
+                        <div class="form-group">
+                            <label for="">Cantidad pagada</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
+                                <input type="number" class="form-control" id="pagado" name="pagado" placeholder="0.00">
                             </div>
 
+                        </div>
 
-                            <div class="form-group">
-                                <label for="">Metodo de pago</label>
-                                <select class="form-control selectpicker" name="id_metodo_pago">
-                                    <option value="">Elija el metodo de pago</option>
-                                    @foreach ($metodos as $m)
-                                    <option value="{{ $m->id_metodo_pago }}">
-                                        {{ $m->nom_metodo_pago }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="">Porcentaje IVA</label>
+                        <div class="form-group">
+                            <label for="">Metodo de pago</label>
+                            <select class="form-control selectpicker" name="id_metodo_pago">
+                                <option value="">Elija el metodo de pago</option>
+                                @foreach ($metodos as $m)
+                                <option value="{{ $m->id_metodo_pago }}">
+                                    {{ $m->nom_metodo_pago }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Porcentaje IVA</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img src="https://img.icons8.com/material/20/000000/percentage--v1.png" />
+                                </span>
                                 <input type="number" class="form-control" name="iva" id="piva" placeholder="0">
-
                             </div>
-                            <div class="form-group">
-                                <label for="">Valor IVA</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Valor IVA</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="number" id="iva" name="valor_iva" placeholder='0.00' class="form-control" readonly />
                             </div>
-                            <div class="form-group">
-                                <label for="">Porcentaje descuento</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Porcentaje descuento</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img src="https://img.icons8.com/material/20/000000/percentage--v1.png" />
+                                </span>
                                 <input type="number" id="pdescuento" name="descuento" placeholder='0' class="form-control" />
                             </div>
-                            <div class="form-group">
-                                <label for="">Valor descuento</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Valor descuento</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="number" id="vdescuento" placeholder='0' class="form-control" readonly />
                             </div>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="">Debe</label>
+                        </div>
+
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label for="">Debe</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="text" class="form-control" id="deuda" name="devuelto" placeholder="0.00" readonly>
                             </div>
-                            <div class="form-group">
-                                <label for="">Subtotal</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Subtotal</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="number" class="form-control" name="subtotal" id="sub_total" placeholder="0.00" readonly>
                             </div>
-                            <div class="form-group">
-                                <label for="">Total sin descuento</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Total sin descuento</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="number" name="total_sin_descuento" id="tdescuento" placeholder='0.00' class="form-control" readonly />
                             </div>
-                            <div class="form-group">
-                                <label for="">Monto total</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Monto total</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">attach_money</i>
+                                </span>
                                 <input type="number" placeholder='0.00' name="precio_total" class="form-control" id="total" readonly>
                             </div>
+                        </div>
 
                     </div>
                 </div>
@@ -126,13 +177,25 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" name="precio[]" id="precioP" class="form-control  precio" readonly />
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">attach_money</i>
+                                                </span>
+                                                <input type="number" name="precio[]" id="precioP" class="form-control  precio" readonly />
+                                            </div>
+
                                         </td>
                                         <td>
                                             <input type="number" name="cantidad[]" class="form-control cantidad" value="0" min="0" />
                                         </td>
                                         <td>
-                                            <input type="number" name="total[]" class="form-control total" readonly />
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">attach_money</i>
+                                                </span>
+                                                <input type="number" name="total[]" class="form-control total" readonly />
+                                            </div>
+
                                         </td>
                                     </tr>
                                     <tr id="product1"></tr>
@@ -147,7 +210,7 @@
                                 <div class="col-md-12">
                                     <button type="" id="add_row" class="btn btn-primary float-right"><i class="material-icons">add</i>Agregar</button>
                                     <button type="" id="delete_row" class="btn btn-primary float-right"><i class="material-icons">delete</i>Eliminar</button>
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" id="imprimir" data-target="#"><i class="material-icons">print</i>Imprimir </button>
+                                    <!--<button type="button" class="btn btn-primary float-right" data-toggle="modal" id="imprimir" data-target="#"><i class="material-icons">print</i>Imprimir </button>-->
                                 </div>
                             </div>
 
@@ -267,24 +330,26 @@
                                 </td>
                                 <!-- Botones de crud para modal -->
                                 <td class="td-actions text-right">
-                                    <a data-toggle="modal" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-target="#ExcelVenta" rel="tooltip">
-                                        <i class="material-icons">print</i>
-                                    </a>
-                                    <a data-toggle="modal" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-target="#PdfVenta" rel="tooltip">
-                                        <i class="material-icons">picture_as_pdf</i>
-                                    </a>
-                                    <!-- Ver-->
-                                    <a data-toggle="modal" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-id_documento="{{$v->id_documento}}" data-fecha="{{$v->fecha_factura}}" data-id_metodo_pago="{{$v->id_metodo_pago}}" data-precio_total="{{$v->precio_total}}" data-subtotal="{{$v->subtotal}}" data-pagado="{{$v->pagado}}" data-descuento="{{$v->descuento}}" data-devuelto="{{$v->devuelto}}" data-total_sin_descuento="{{$v->total_sin_descuento}}" data-iva="{{$v->iva}}" data-target="#VerVenta" rel="tooltip">
+                                    <!--Descargar excel-->
+                                    <button type="button" data-toggle="modal" class="btn btn-black" data-id_venta="{{$v->id_venta}}" data-target="#ExcelVenta" rel="tooltip">
+                                        <img src="https://img.icons8.com/color/19/000000/export-excel.png" />
+                                    </button>
+                                    <!--Descargar pdf-->
+                                    <button type="button" data-toggle="modal" class="btn btn-black" data-id_venta="{{$v->id_venta}}" data-target="#PdfVenta" rel="tooltip">
+                                        <img src="https://img.icons8.com/color/19/000000/pdf-2.png" />
+                                    </button>
+                                    <!--Ver-->
+                                    <button type="button" data-toggle="modal" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-id_documento="{{$v->id_documento}}" data-fecha="{{$v->fecha_factura}}" data-id_metodo_pago="{{$v->id_metodo_pago}}" data-precio_total="{{$v->precio_total}}" data-subtotal="{{$v->subtotal}}" data-pagado="{{$v->pagado}}" data-descuento="{{$v->descuento}}" data-devuelto="{{$v->devuelto}}" data-total_sin_descuento="{{$v->total_sin_descuento}}" data-iva="{{$v->iva}}" data-target="#VerVenta" rel="tooltip">
                                         <i class="material-icons">visibility</i>
-                                    </a>
-
-                                    <a data-toggle="modal" data-id_venta="{{$v->id_venta}}" data-id_documento="{{$v->id_documento}}" data-fecha="{{$v->fecha_factura}}" data-id_metodo_pago="{{$v->id_metodo_pago}}" data-precio_total="{{$v->precio_total}}" data-subtotal="{{$v->subtotal}}" data-pagado="{{$v->pagado}}" data-descuento="{{$v->descuento}}" data-devuelto="{{$v->devuelto}}" data-total_sin_descuento="{{$v->total_sin_descuento}}" data-iva="{{$v->iva}}" data-target="#EditVenta" rel="tooltip" class="btn btn-jei">
+                                    </button>
+                                    <!--Editar-->
+                                    <button type="button" data-toggle="modal" data-id_venta="{{$v->id_venta}}" data-id_documento="{{$v->id_documento}}" data-fecha="{{$v->fecha_factura}}" data-id_metodo_pago="{{$v->id_metodo_pago}}" data-precio_total="{{$v->precio_total}}" data-subtotal="{{$v->subtotal}}" data-pagado="{{$v->pagado}}" data-descuento="{{$v->descuento}}" data-devuelto="{{$v->devuelto}}" data-total_sin_descuento="{{$v->total_sin_descuento}}" data-iva="{{$v->iva}}" data-target="#EditVenta" rel="tooltip" class="btn btn-jei">
                                         <i class="material-icons">edit</i>
-                                    </a>
-
-                                    <a rel="tooltip" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-toggle="modal" data-target="#EliminarVenta">
+                                    </button>
+                                    <!--Eliminar-->
+                                    <button type="button" rel="tooltip" class="btn btn-jei" data-id_venta="{{$v->id_venta}}" data-toggle="modal" data-target="#EliminarVenta">
                                         <i class="material-icons">close</i>
-                                    </a>
+                                    </button>
                                 </td>
 
 
@@ -377,14 +442,14 @@
                 <!-- Formulario -->
                 <form class="form-submit-limit">
                     @csrf
-
+                    <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                     <div class="form-group">
                         <label>N° documento</label>
                         <input type="text" name="id_documento" class="form-control" id="id_documento" placeholder="">
                     </div>
                     <div class="form-group ">
                         <label for="exampleFormControlSelect1">Tipo de documento</label>
-                        <select class="form-control" name="id_tipo_documento" data-style="btn btn-link" id="id_tipo_documento">
+                        <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
                             <option value="">Seleccionar tipo...</option>
                             @foreach($tipos as $t)
                             <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
@@ -432,12 +497,12 @@
     </div>
 </div>
 
-<!-- Modal eliminar producto-->
+<!-- Modal eliminar venta-->
 <div class="modal fade" id="EliminarVenta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar venta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -491,7 +556,7 @@
                         <div class="form-group col-md-6">
                             <label>Metodo de pago</label>
                             <select class="form-control selectpicker" name="id_metodo_pago" id="id_metodo_pago">
-                                <option value="">No se eligio metodo de pago</option>
+                                <option value="">No tiene metodo de pago registrado</option>
                                 @foreach ($metodos as $m)
                                 <option value="{{ $m->id_metodo_pago }}">
                                     {{ $m->nom_metodo_pago }}
@@ -578,8 +643,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
-                            <label for="">Metodo de pago</label>
-                            <select class="form-control selectpicker" name="id_metodo_pago" id="id_metodo_pago">
+                            <label>Metodo de pago</label>
+                            <select class="form-control selectpicker" name="id_metodo_pago" id="id_metodo_pago" disabled>
                                 <option value="">No tiene metodo de pago registrado</option>
                                 @foreach ($metodos as $m)
                                 <option value="{{ $m->id_metodo_pago }}">
@@ -666,7 +731,9 @@
         let direccion = $("input[name=direccion]").val();
         let telefono = $("input[name=telefono]").val();
         let celular = $("input[name=celular]").val();
+        let id_user = $("input[name=id_user]").val();
         let fecha = $("input[name=fecha]").val();
+
         let _token = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -684,31 +751,63 @@
                 telefono: telefono,
                 celular: celular,
                 fecha_nacimiento: fecha,
+                id_user: id_user,
                 _token: _token
             },
-            dataType: 'html',
+            dataType: 'json',
 
 
             success: function(data) {
 
+                if (data.error) {
+                    var values = '';
 
+                    jQuery.each(data.error, function(key, value) {
+                        values += value + "<br>"
+                    });
+                    console.log(values);
+                    swal({
+                        title: "Ocurrio un error",
+                        html: values,
+                        timer: 3000,
+                        showConfirmButton: false,
+                        type: "error"
+                    })
+                } else if (!data.error) {
+                    limpiar();
+                    $('#aaa').empty().append(data.html);
+                    $('select').selectpicker('refresh');
+                     //ALERTAR SUAVE REGISTRO CORRECTO 
+                    Swal.fire({
 
-                limpiar();
+                        type: 'success',
+                        title: 'Cliente registrado correctamente',
+                        showConfirmButton: false,
+                        timer: 1500,
+
+                    })
+                    
+                    
+                    $('#InsertCliente').modal('hide');     
+                }
+
+                
+                /*limpiar();
 
                 $('#aaa').empty().append(data);
                 $('#InsertCliente').modal('hide');
-                $('select').selectpicker('refresh');
+                $('select').selectpicker('refresh');*/
 
                 //ALERTAR SUAVE REGISTRO CORRECTO 
-                Swal.fire({
+                /*Swal.fire({
 
                     type: 'success',
                     title: 'Cliente registrado correctamente',
                     showConfirmButton: false,
                     timer: 1500,
 
-                })
-
+                })*/
+                
             },
             error: function(data) {
                 //ALERTAR SUAVE ERROR

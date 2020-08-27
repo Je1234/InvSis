@@ -8,5 +8,5 @@ class categorias extends Model
 {
     //
     protected $primaryKey = 'id_categoria';
-    protected $fillable =['nom_categoria'];
+    protected $fillable =['id_user','nom_categoria'];
 }

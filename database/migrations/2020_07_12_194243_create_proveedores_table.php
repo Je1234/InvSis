@@ -14,7 +14,7 @@ class CreateProveedoresTable extends Migration
     public function up()
     {
         Schema::create('proveedores', function (Blueprint $table) {
-            $table->integer('id_proveedor',true);
+            $table->bigInteger('id_proveedor',true);
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->string('nombre', 80)->nullable();

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use App\clientes;
+
 class ClienteController extends Controller
 {
     /**
@@ -43,19 +46,44 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $clientes= new clientes;
-        $clientes->id_documento=$request->documento;
-        $clientes->id_tipo_documento=$request->tipo_documento;
-        $clientes->nombres=$request->nombre;
-        $clientes->apellidos=$request->apellido;
-        $clientes->correo=$request->correo;
-        $clientes->direccion=$request->direccion;
-        $clientes->telefono=$request->telefono;
-        $clientes->celular=$request->celular;
-        $clientes->fecha_nacimiento=$request->fecha;
-        $clientes->id_user=$request->id_user;
-        $clientes->save();
-        return redirect()->route('cliente.index')->with('datos','Registro agregado correctamente');
+        $validatedData = Validator::make($request->all(), [
+            'id_documento' => 'required|min:8|max:20',
+            'nombres' => 'required|max:80',
+            'apellidos' => 'required|max:80',
+            'correo' => 'nullable|email|max:90',
+            'direccion' => 'nullable|max:80',
+            'telefono' => 'nullable|max:15',
+            'celular' => 'nullable|max:15',
+            'fecha_nacimiento' => 'nullable|date'
+        ],[
+            'id_documento.required' => 'El N° de documento es requerido',
+            'id_documento.max' => 'El N° de documento no debe exceder los :max caracteres',
+            'id_documento.min' => 'El N° de documento debe tener minimo :min caracteres',
+            'nombres.required' => 'Los nombres del cliente son requeridos',
+            'nombres.max' => 'El nombre del cliente no debe exceder los :max caracteres',
+            'apellidos.required' => 'Los apellidos del cliente son requeridos',
+            'apellidos.max' => 'El apellido del cliente no debe exceder los :max caracteres',
+            'correo.max' => 'El correo no debe exceder los :max caracteres',
+            'correo.email' => 'El correo debe ser una direccion valida',
+            'direccion.max' => 'La direccion no debe exceder los :max caracteres',
+            'telefono.max' => 'El telefono no debe exceder los :max caracteres',
+            'celular.max' => 'El celular no debe exceder los :max caracteres',
+            'fecha_nacimiento.date' => 'La fecha debe estar en un formato valido'
+            
+
+        ]);
+
+        if ($validatedData->passes()) {
+            $cliente = $request->all();
+           clientes::create($cliente);
+
+           return redirect()->route('cliente.index')->with('datos','Registro guardado correctamente');
+           
+        }else{
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
+       
 
     }
 
@@ -92,15 +120,15 @@ class ClienteController extends Controller
     {
         $cliente= array(
 
-            "id_documento"=>$request->documento,
-            "id_tipo_documento"=>$request->tipo_documento,
-            "nombres"=>$request->nombre,
-            "apellidos"=>$request->apellido,
+            "id_documento"=>$request->id_documento,
+            "id_tipo_documento"=>$request->id_tipo_documento,
+            "nombres"=>$request->nombres,
+            "apellidos"=>$request->apellidos,
             "correo"=>$request->correo,
             "direccion"=>$request->direccion,
             "telefono"=>$request->telefono,
             "celular"=>$request->celular,
-            "fecha_nacimiento"=>$request->fecha
+            "fecha_nacimiento"=>$request->fecha_nacimiento
 
         );
 

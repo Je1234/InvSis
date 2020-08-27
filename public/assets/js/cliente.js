@@ -35,7 +35,7 @@ $('#VerCliente').on('show.bs.modal',function(event){
     modal.find('.modal-body #telefono').val(telefono);
     modal.find('.modal-body #celular').val(celular);
     modal.find('.modal-body #fecha').val(fecha);
-    
+    $('select').selectpicker('refresh');
 });
 
 //EDITAR CLIENTE
@@ -63,7 +63,7 @@ $('#EditCliente').on('show.bs.modal',function(event){
     modal.find('.modal-body #telefono').val(telefono);
     modal.find('.modal-body #celular').val(celular);
     modal.find('.modal-body #fecha').val(fecha);
-    
+    $('select').selectpicker('refresh');
 });
 
 

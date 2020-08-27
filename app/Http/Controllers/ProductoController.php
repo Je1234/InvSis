@@ -6,6 +6,7 @@ use App\productos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -60,9 +61,48 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:20',
+            'precio_venta' => 'nullable|digits_between:1,10',
+            'precio_compra' => 'nullable|digits_between:1,10',
+            'stock' => 'nullable|digits_between:1,11',
+            'marca' => 'nullable|max:60',
+            'ruta_imagen' => 'nullable|mimes:jpeg,jpg,png|max:5000'
+        ],[
+            'nombre.required' => 'El nombre del producto es requerido',
+            'nombre.max' => 'El nombre del producto no debe exceder los :max caracteres',
+            'precio_venta.digits_between' => 'El precio de venta no debe exceder los 15 digitos',
+            'precio_compra.digits_between' => 'El precio de compra no debe exceder los 15 digitos',
+            'stock.digits_between' => 'La cantidad de stock no debe exceder los 15 digitos',
+            'marca.max' => 'La marca no debe exceder los :max caracteres',
+            'ruta_imagen.mimes' => 'La imagen solo puede ser formato. jpeg,png,jpg',
+            'ruta_imagen.max' => 'La imagen no puede exceder los 5Mb de peso',
+           
 
-        $entrada=$request->all();
+
+        ]);
+
+        if ($validatedData->passes()) {
+
+            $entrada = $request->all();
+            if ($archivo = $request->file('imagen')) {
+                $archivo = $request->imagen->store('uploads', 'public');
+                $nombre = $request->imagen->hashName();
+               
+
+                $entrada['ruta_imagen'] = $nombre;
+               
+            }
+
+
+            productos::create($entrada);
+            return redirect()->route('producto.index')->with('datos', 'Registro guardado correctamente');
+        } else {
+
+            return response()->json(['error' => $validatedData->errors()->all()]);
+        }
+
+        /*$entrada=$request->all();
         if($archivo=$request->file('imagen')){
             $archivo = $request->imagen->store('uploads','public');
             $nombre = $request->imagen->hashName();
@@ -74,7 +114,7 @@ class ProductoController extends Controller
        
         
         productos::create($entrada);
-        return redirect()->route('producto.index')->with('datos','Registro guardado correctamente');
+        return redirect()->route('producto.index')->with('datos','Registro guardado correctamente');*/
     }
 
     /**

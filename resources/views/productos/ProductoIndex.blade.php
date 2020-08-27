@@ -57,24 +57,24 @@
 
           @elseif(($productoB))
 
-          <form class=" form-inline">
+          <form class="form-group form-inline">
 
-            <div class="input-group col-md-1  ">
+            <div class="input-group col-md-2 ">
 
-              <select class="form-control " name="tipo"  id="">
+              <select class="form-control " name="tipo">
                 <option value="">Filtrar por</option>
                 <option>Nombre</option>
                 <option>Marca</option>
-                <option>Categoria</option>
-                <option>Precio_venta</option>
-                <option>Precio_compra</option>
-                <option>stock</option>
+                <option value="id_categoria">Categoria</option>
+                <option value="precio_venta">Precio de venta</option>
+                <option value="precio_compra">Precio de compra</option>
+                <option>Stock</option>
               </select>
             </div>
 
-            <div class="input-group col-md-12">
+            <div class="input-group col-md-2">
 
-              <input name="buscarPor" type="search" value="" class="form-control" aria-label="search" placeholder="Buscar...">
+              <input name="buscarPor" type="search" value="" class="form-control " aria-label="search" placeholder="Buscar...">
               <button type="submit" class="btn btn-primary btn-round btn-just-icon">
                 <i class="material-icons">search</i>
                 <div class="ripple-container"></div>
@@ -122,16 +122,16 @@
               </thead>
               <!--Imprimiendo lista de productos-->
               <tbody>
-               
+                @php($i=1)
                 @foreach( $productoB as $productI)
-               
+
                 <tr>
                   <td>
-                    {{$productI->id_producto}}
+                    {{$i}}
                   </td>
                   <td>
                     <div class="img-container">
-                      <img src="../storage/app/public/uploads/{{$productI->ruta_imagen}}" rel="nofollow" style="width:100px;height:150" rel="nofollow" alt="...">
+                      <img src="../storage/uploads/{{$productI->ruta_imagen}}" rel="nofollow" style="width:100px;height:150" rel="nofollow" alt="...">
                     </div>
                   </td>
 
@@ -150,20 +150,20 @@
                   <!-- Botones de crud para modal -->
                   <td class="td-actions text-right">
                     <!-- Ver-->
-                    <a data-id_producto="{{$productI->id_producto}}" data-id_proveedor="{{$productI->id_proveedor}}" data-id_ubicacion="{{$productI->id_ubicacion}}" data-nombre="{{$productI->nombre}}" data-marca="{{$productI->marca}}" data-precio_venta="{{$productI->precio_venta}}" data-precio_compra="{{$productI->precio_compra}}" data-id_categoria="{{$productI->id_categoria}}" data-stock="{{$productI->stock}}" data-descripcion="{{$productI->descripcion}}" data-ruta_imagen="{{$productI->ruta_imagen}}" data-toggle="modal" data-target="#VerProduct" rel="tooltip" class="btn btn-jei">
+                    <button data-id_producto="{{$productI->id_producto}}" data-id_proveedor="{{$productI->id_proveedor}}" data-id_ubicacion="{{$productI->id_ubicacion}}" data-nombre="{{$productI->nombre}}" data-marca="{{$productI->marca}}" data-precio_venta="{{$productI->precio_venta}}" data-precio_compra="{{$productI->precio_compra}}" data-id_categoria="{{$productI->id_categoria}}" data-stock="{{$productI->stock}}" data-descripcion="{{$productI->descripcion}}" data-ruta_imagen="{{$productI->ruta_imagen}}" data-toggle="modal" data-target="#VerProduct" rel="tooltip" class="btn btn-jei">
                       <i class="material-icons">visibility</i>
-                    </a>
+                    </button>
                     <!-- Editar -->
-                    <a data-id_producto="{{$productI->id_producto}}" data-id_proveedor="{{$productI->id_proveedor}}" data-id_ubicacion="{{$productI->id_ubicacion}}" data-nombre="{{$productI->nombre}}" data-marca="{{$productI->marca}}" data-precio_venta="{{$productI->precio_venta}}" data-precio_compra="{{$productI->precio_compra}}" data-id_categoria="{{$productI->id_categoria}}" data-stock="{{$productI->stock}}" data-descripcion="{{$productI->descripcion}}" data-ruta_imagen="{{$productI->ruta_imagen}}" data-toggle="modal" data-target="#EditProduct" rel="tooltip" class="btn btn-jei">
+                    <button data-id_producto="{{$productI->id_producto}}" data-id_proveedor="{{$productI->id_proveedor}}" data-id_ubicacion="{{$productI->id_ubicacion}}" data-nombre="{{$productI->nombre}}" data-marca="{{$productI->marca}}" data-precio_venta="{{$productI->precio_venta}}" data-precio_compra="{{$productI->precio_compra}}" data-id_categoria="{{$productI->id_categoria}}" data-stock="{{$productI->stock}}" data-descripcion="{{$productI->descripcion}}" data-ruta_imagen="{{$productI->ruta_imagen}}" data-toggle="modal" data-target="#EditProduct" rel="tooltip" class="btn btn-jei">
                       <i class="material-icons">edit</i>
-                    </a>
+                    </button>
                     <!-- Eliminar -->
-                    <a rel="tooltip" class="btn btn-jei" data-id_producto="{{$productI->id_producto}}" data-toggle="modal" data- data-target="#EliminarProduct">
+                    <button rel="tooltip" class="btn btn-jei" data-id_producto="{{$productI->id_producto}}" data-toggle="modal" data- data-target="#EliminarProduct">
                       <i class="material-icons">close</i>
-                    </a>
+                    </button>
                   </td>
                 </tr>
-                
+                @php($i++)
                 @endforeach
 
               </tbody>
@@ -197,12 +197,12 @@
                       <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                       <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" >
+                        <input type="text" name="nombre" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Precio venta</label>
                         <input type="number" name="precio_venta" class="form-control">
-                        
+
                       </div>
                       <div class="form-group">
                         <label>Precio compra</label>
@@ -214,11 +214,11 @@
                       </div>
                       <div class="form-group">
                         <label>Marca</label>
-                        <input type="texts" name="marca" class="form-control" >
+                        <input type="texts" name="marca" class="form-control">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Proveedor</label>
-                        <select class="form-control" name="id_proveedor"  id="id_proveedor">
+                        <select class="form-control" name="id_proveedor" id="id_proveedor">
                           <option value="">Seleccionar proveedor...</option>
                           @foreach($proveedor as $pro)
                           <option value="{{$pro->id_proveedor}}">{{$pro->nombre}}</option>
@@ -231,7 +231,7 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Categoria</label>
-                        <select class="form-control" name="id_categoria"  id="exampleFormControlSelect1">
+                        <select class="form-control" name="id_categoria" id="exampleFormControlSelect1">
                           <option value="">Seleccionar categoria...</option>
                           @foreach($categoria as $c)
                           <option value="{{$c->id_categoria}}">{{$c->nom_categoria}}</option>
@@ -245,7 +245,7 @@
                       </div>
                       <div class="form-group">
                         <label for="">Ubicacion bodega</label>
-                        <select class="form-control" name="id_ubicacion"  id="">
+                        <select class="form-control" name="id_ubicacion" id="">
                           <option value="">Seleccione aqui...</option>
                           @foreach($ubicacion as $u)
                           <option value="{{$u->id_ubicacion}}">{{$u->nombre_bodega}}</option>
@@ -258,7 +258,7 @@
                         </a>
                       </div>
                       <div class="custom-file form-file-upload form-file-multiple">
-                        <input type="file" name="imagen" class="custom-file-input inputFileHidden " id="customFile">
+                        <input type="file" name="ruta_imagen" class="custom-file-input inputFileHidden " id="imagen">
                         <label class="custom-file-label" for="customFile">Escoger imagen de producto</label>
                       </div>
 
@@ -268,7 +268,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit">Guardar</button>
+                        <button type="submit" class="btn btn-primary button-submit-limit gproducto">Guardar</button>
                       </div>
 
 
@@ -318,8 +318,8 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Proveedor</label>
-                        <select class="form-control " name="id_proveedor"  id="id_proveedor">
-                          <option value="">Seleccionar proveedor...</option>
+                        <select class="form-control " name="id_proveedor" id="id_proveedor">
+                          <option value="">No tiene proveedor registrado...</option>
                           @foreach($proveedor as $pro)
                           <option value="{{$pro->id_proveedor}}">{{$pro->nombre}}</option>
                           @endforeach
@@ -327,8 +327,8 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Categoria</label>
-                        <select class="form-control " id="id_categoria" name="id_categoria" >
-                          <option value="">Seleccionar categoria...</option>
+                        <select class="form-control " id="id_categoria" name="id_categoria">
+                          <option value="">No tiene categoria registrada</option>
                           <!-- Seleccion dinamica de categoria -->
                           @foreach($categoria as $c)
                           <option value="{{$c->id_categoria}}">{{$c->nom_categoria}}</option>
@@ -337,8 +337,8 @@
                       </div>
                       <div class="form-group">
                         <label for="">Ubicacion bodega</label>
-                        <select class="form-control" id="id_ubicacion" name="id_ubicacion"  id="">
-                          <option value="">Seleccione aqui...</option>
+                        <select class="form-control" id="id_ubicacion" name="id_ubicacion" id="">
+                          <option value="">No tiene bodega registrada</option>
                           @foreach($ubicacion as $u)
                           <option value="{{$u->id_ubicacion}}">{{$u->nombre_bodega}}</option>
                           @endforeach
@@ -388,42 +388,42 @@
                       </div>
                       <div class="form-group">
                         <label>Precio venta</label>
-                        <input type="number" name="precio_venta" id="precio_venta" class="form-control"  disabled>
+                        <input type="number" name="precio_venta" id="precio_venta" class="form-control" disabled>
                       </div>
                       <div class="form-group">
                         <label>Precio compra</label>
-                        <input type="number" name="precio_compra" id="precio_compra" class="form-control"  disabled>
+                        <input type="number" name="precio_compra" id="precio_compra" class="form-control" disabled>
                       </div>
                       <div class="form-group">
                         <label>Cantidad en stock</label>
-                        <input type="number" name="stock" id="stock" class="form-control"  disabled>
+                        <input type="number" name="stock" id="stock" class="form-control" disabled>
                       </div>
                       <div class="form-group">
                         <label>Marca</label>
-                        <input type="texts" name="marca" id="marca" class="form-control"  disabled>
+                        <input type="texts" name="marca" id="marca" class="form-control" disabled>
                       </div>
                       <div class="form-group">
-                        <label for="exampleFormControlSelect1">Proveedor</label>
-                        <select class="form-control" name="id_proveedor"  id="id_proveedor" disabled>
-                          <option value="">Seleccionar proveedor...</option>
+                        <label>Proveedor</label>
+                        <select class="selectpicker form-control" name="id_proveedor" id="id_proveedor" disabled>
+                          <option value="">No tiene proveedor registrado...</option>
                           @foreach($proveedor as $pro)
                           <option value="{{$pro->id_proveedor}}">{{$pro->nombre}}</option>
                           @endforeach
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="exampleFormControlSelect1">Categoria</label>
-                        <select class="form-control" id="id_categoria" name="id_categoria"  disabled>
-                          <option>...</option>
+                        <label>Categoria</label>
+                        <select class="selectpicker form-control" id="id_categoria" name="id_categoria" disabled>
+                          <option value="">No tiene categoria registrada</option>
                           @foreach($categoria as $c)
                           <option value="{{$c->id_categoria}}">{{$c->nom_categoria}}</option>
                           @endforeach
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="">Ubicacion bodega</label>
-                        <select class="form-control" id="id_ubicacion" name="id_ubicacion"  id="" disabled>
-                          <option>...</option>
+                        <label >Ubicacion bodega</label>
+                        <select class="selectpicker form-control" id="id_ubicacion" name="id_ubicacion" disabled>
+                          <option value="">No tiene bodega registrada</option>
                           @foreach($ubicacion as $u)
                           <option value="{{$u->id_ubicacion}}">{{$u->nombre_bodega}}</option>
                           @endforeach
@@ -486,6 +486,72 @@
       </div>
     </div>
 
+    <!--Validaciones guardado producto con ajax-->
+    <script>
+      $(".gproducto").click(function(e) {
+        e.preventDefault();
+        let nombre = $("input[name=nombre]").val();
+        let precio_venta = $("input[name=precio_venta]").val();
+        let precio_compra = $("input[name=precio_compra]").val();
+        let stock = $("input[name=stock]").val();
+        let marca = $("input[name=marca]").val();
+        let id_proveedor = $("select[name=id_proveedor]").val();
+        let id_categoria = $("select[name=id_categoria]").val();
+        let id_ubicacion = $("select[name=id_ubicacion]").val();
+        let ruta_imagen = $("input[name=ruta_imagen]").val();
+        let descripcion = $("input[name=descripcionP]").val();
+        let id_user = $("input[name=id_user]").val();
+        let _token = $('meta[name="csrf-token"]').attr('content');
+
+        var gp = new FormData();
+        gp.append('ruta_imagen', $("#imagen").get(0).files[0]);
+        gp.append('nombre', nombre);
+        gp.append('precio_venta', precio_venta);
+        gp.append('precio_compra', precio_compra);
+        gp.append('stock', stock);
+        gp.append('marca', marca);
+        gp.append('id_proveedor', id_proveedor);
+        gp.append('id_categoria', id_categoria);
+        gp.append('id_ubicacion', id_ubicacion);
+        gp.append('descripcion', descripcion);
+        gp.append('_token', _token);
+        
+        $.ajax({
+          url: "{{route('producto.store')}}",
+          type: "POST",
+          data: gp,
+          processData: false,
+    contentType: false,
+          success: function(data) {
+
+
+            if (data.error) {
+              var values = '';
+
+              jQuery.each(data.error, function(key, value) {
+                values += value + "<br>"
+              });
+              console.log(values);
+              swal({
+                title: "Ocurrio un error",
+                html: values,
+                timer: 3000,
+                showConfirmButton: false,
+                type: "error"
+              })
+            } else if (!data.error) {
+              setTimeout(function() {
+                location.reload();
+              }, 1000);
+            }
+          },
+          error: function(data) {
+            console.log(data);
+
+          }
+        });
+      });
+    </script>
     @endsection
 
     @section('titulo','Productos')

@@ -14,7 +14,7 @@ class CreateUbicacionesTable extends Migration
     public function up()
     {
         Schema::create('ubicaciones', function (Blueprint $table) {
-            $table->integer('id_ubicacion',true);
+            $table->bigInteger('id_ubicacion',true);
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->string('nombre_bodega', 80);

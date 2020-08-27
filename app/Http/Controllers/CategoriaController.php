@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\categorias;
+use Illuminate\Support\Facades\Validator;
+
 class CategoriaController extends Controller
 {
     /**
@@ -17,7 +20,7 @@ class CategoriaController extends Controller
     }
     public function index()
     {
-        $categoria = categorias::paginate(5);
+        $categoria = categorias::where('id_user',Auth::user()->id)->paginate(5);
         return view('categorias.CategoriaIndex' ,compact('categoria'));
     }
 
@@ -40,11 +43,25 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
 
-        $categoria= new categorias;
-        $categoria->nom_categoria=$request->nombre;
-        $categoria->save();
+        $validatedData = Validator::make($request->all(), [
+            'nom_categoria' => 'required|max:50',
+            
+        ],[
+            'nom_categoria.required' => 'El nombre de la categoria no debe estar vacio',
+            'nom_categoria.max' => 'El nombre de la categoria no debe exceder los :max caracteres',
+        ]);
+       
+       
+        if ($validatedData->passes()) {
+            $categoria = $request->all();
+           categorias::create($categoria);
 
-        return redirect()->route('categoria.index')->with('datos','Registro guardado correctamente');
+           return redirect()->route('categoria.index')->with('datos','Registro guardado correctamente');
+           
+        }
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+        
         
     }
 

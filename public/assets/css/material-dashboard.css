@@ -3114,8 +3114,8 @@ fieldset:disabled a.btn {
 
 .btn-light.disabled,
 .btn-light:disabled {
-  color: #212529;
-  background-color: #f8f9fa;
+  color: #f8f9fa;
+  background-color: #9C27B0;
   border-color: #f8f9fa;
 }
 

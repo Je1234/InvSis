@@ -10,6 +10,8 @@ use App\productos;
 use App\proveedores;
 use App\compras;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Validator;
+
 class CompraController extends Controller
 {
     /**
@@ -25,7 +27,7 @@ class CompraController extends Controller
         $categoria =DB::table('categorias')->where('id_user',Auth::user()->id)->get();
         $ubicacion =DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
 
-        $metodos =DB::table('metodo_pagos')->where('id_user',Auth::user()->id)->get();
+        $metodos =DB::table('metodo_pagos')->get();
 
          return view('compras.CompraIndex',compact('compra','metodos','products','proveedores','categoria','ubicacion'));
         
@@ -69,49 +71,89 @@ class CompraController extends Controller
 
     public function storeProveedor(Request $request)
     {
-        $proveedor= new proveedores;
-        $proveedor->nombre=$request->nombre;
-        $proveedor->direccion=$request->direccion;
-        $proveedor->telefono=$request->telefono;
-        $proveedor->estado=$request->estado;
-        $proveedor->save();
-        
-        $proveedores =DB::table('proveedores')->get();
-        $lista = view('compras.ListaProveedores', compact('proveedores'))->render();
-        
-        $utf8_ansi2 = array(
-            '/ "} /'=> '',
-            '/\u00f1/' =>'ñ',
-            '/\u00d1/' =>'Ñ',
-            '/<\/option>/'=>'',
-            '/<\/option>"}/'=>'',
-            '/\r\n/'=>'',
-            );
-            $lista = preg_replace(array_keys($utf8_ansi2),array_values($utf8_ansi2),$lista);
-
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:80',
+            'direccion' => 'nullable|max:80',
+            'telefono' => 'nullable|max:20',
+        ],[
+            'nombre.required' => 'El nombre del proveedor es requerido',
+            'nombre.max' => 'El nombre del proveedor no debe exceder los :max caracteres',
+            'direccion.max' => 'La direccion no debe exceder los :max caracteres',
+            'telefono.max' => 'El telefono no debe exceder los :max caracteres',
             
+
+        ]);
+
+        if ($validatedData->passes()) {
+            $proveedores = $request->all();
+           proveedores::create($proveedores);
+
+           $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
+           $lista = view('compras.ListaProveedores', compact('proveedores'))->render();
+           
+           $utf8_ansi2 = array(
+               '/ "} /'=> '',
+               '/\u00f1/' =>'ñ',
+               '/\u00d1/' =>'Ñ',
+               '/<\/option>/'=>'',
+               '/<\/option>"}/'=>'',
+               '/\r\n/'=>'',
+               );
+               $lista = preg_replace(array_keys($utf8_ansi2),array_values($utf8_ansi2),$lista);
+   
+               
+           
+           return response()->json(array('html'=>$lista));
+           
+        }else{
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
         
-        return response()->json(compact('lista'));
 
     }
 
     public function storeProducto(Request $request)
     {
-        $entrada=$request->all();
-        if($archivo=$request->file('imagen')){
-            $archivo = $request->imagen->store('uploads','public');
-            $nombre = $request->imagen->hashName();
-            //$formato = $request->imagen->extension();
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:20',
+            'precio_venta' => 'nullable|digits_between:1,10',
+            'precio_compra' => 'nullable|digits_between:1,10',
+            'stock' => 'nullable|digits_between:1,11',
+            'marca' => 'nullable|max:60',
+            'ruta_imagen' => 'nullable|mimes:jpeg,jpg,png|max:5000'
+        ],[
+            'nombre.required' => 'El nombre del producto es requerido',
+            'nombre.max' => 'El nombre del producto no debe exceder los :max caracteres',
+            'precio_venta.digits_between' => 'El precio de venta no debe exceder los 15 digitos',
+            'precio_compra.digits_between' => 'El precio de compra no debe exceder los 15 digitos',
+            'stock.digits_between' => 'La cantidad de stock no debe exceder los 15 digitos',
+            'marca.max' => 'La marca no debe exceder los :max caracteres',
+            'ruta_imagen.mimes' => 'La imagen solo puede ser formato. jpeg,png,jpg',
+            'ruta_imagen.max' => 'La imagen no puede exceder los 5Mb de peso',
+           
 
-            $entrada['ruta_imagen']=$nombre;
-            //$entrada['tipo']=$formato;
-        }
-       
-        productos::create($entrada);
-        $products =DB::table('productos')->get();
+
+        ]);
+
+        if ($validatedData->passes()) {
+
+            $entrada = $request->all();
+            if ($archivo = $request->file('ruta_imagen')) {
+                $archivo = $request->imagen->store('uploads', 'public');
+                $nombre = $request->imagen->hashName();
+               
+
+                $entrada['ruta_imagen'] = $nombre;
+               
+            }
+
+
+            productos::create($entrada);
+            $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
         $lista = view('compras.ListaProductos', compact('products'))->render();
-        
-        $utf8_ansi2 = array(
+
+            $utf8_ansi2 = array(
             '/ "} /'=> '',
             '/\u00f1/' =>'ñ',
             '/\u00d1/' =>'Ñ',
@@ -120,8 +162,13 @@ class CompraController extends Controller
             '/\r\n/'=>'',
             );
             $lista = preg_replace(array_keys($utf8_ansi2),array_values($utf8_ansi2),$lista);
-        
-        return response()->json(compact('lista'));
+
+            return response()->json(array('html'=>$lista));
+        } else {
+
+            return response()->json(['error' => $validatedData->errors()->all()]);
+        }
+       
 
     }
 

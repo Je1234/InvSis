@@ -33,6 +33,7 @@ class productos extends Model
  //Funcion para busqueda de productos
     public function scopeBuscar($query, $tipo,$busqueda){
 
+      
         if(($tipo) && ($busqueda)){
             return $query->where($tipo,'like',"%$busqueda%")->where('id_user',Auth::user()->id); 
         }

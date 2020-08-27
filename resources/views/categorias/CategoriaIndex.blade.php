@@ -79,15 +79,15 @@
 
                                     <!-- Botones de crud para modal -->
                                     <td class="td-actions text-right">
-                                        
+
                                         <!-- Editar -->
-                                        <a data-id_categoria="{{$catI->id_categoria}}" data-nom_categoria="{{$catI->nom_categoria}}" data-toggle="modal" data-target="#EditCat" rel="tooltip" class="btn btn-jei">
+                                        <button data-id_categoria="{{$catI->id_categoria}}" data-nom_categoria="{{$catI->nom_categoria}}" data-toggle="modal" data-target="#EditCat" rel="tooltip" class="btn btn-jei">
                                             <i class="material-icons">edit</i>
-                                        </a>
+                                        </button>
                                         <!-- Eliminar -->
-                                        <a rel="tooltip" class="btn btn-jei" data-id_categoria="{{$catI->id_categoria}}" data-toggle="modal" data-target="#EliminarCat">
+                                        <button rel="tooltip" class="btn btn-jei" data-id_categoria="{{$catI->id_categoria}}" data-toggle="modal" data-target="#EliminarCat">
                                             <i class="material-icons">close</i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -118,16 +118,21 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- Formulario -->
-                                        <form class="form-submit-limit" method="POST" action="{{route('categoria.store')}}">
+
+                                        <form class="form-submit-limit" method="POST" id="categoria_add" action="{{route('categoria.store')}}">
                                             @csrf
 
+                                            <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
                                             <div class="form-group">
                                                 <label>Nombre</label>
-                                                <input type="text" name="nombre" class="form-control" id="" placeholder="">
+                                                <input type="text" name="nom_categoria" class="form-control">
+
+
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary button-submit-limit">Guardar</button>
+                                                <button type="submit" class="btn btn-primary button-submit-limit gcategoria">Guardar</button>
                                             </div>
 
 
@@ -144,6 +149,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
+
                                         <h5 class="modal-title" id="exampleModalLabel">Editar categoria</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -174,7 +180,7 @@
                         </div>
 
 
-                        
+
 
 
                         <!-- Modal eliminar categoria-->
@@ -211,6 +217,49 @@
             </div>
         </div>
 
+        <script>
+            $(".gcategoria").click(function(e) {
+                let nom_categoria = $("input[name=nom_categoria]").val();
+                let id_user = $("input[name=id_user]").val();
+                let _token = $('meta[name="csrf-token"]').attr('content');
+                e.preventDefault();
+                $.ajax({
+                    url: "{{route('categoria.store')}}",
+                    type: "POST",
+                    data: {
+                        id_user: id_user,
+                        nom_categoria: nom_categoria,
+                        _token: _token
+                    },
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data.error) {
+                            var values = '';
+                            jQuery.each(data.error, function(key, value) {
+                                values +=  value 
+                            });
+
+                            swal({
+                                title: "Ocurrio un error",
+                                text: values,
+                                timer: 3000,
+                                showConfirmButton: false,
+                                type: "error"
+                            })
+                        }else if(!data.error){
+                            setTimeout(function() {
+                                location.reload(); 
+                            }, 1000);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+
+                    }
+                });
+            });
+        </script>
         @endsection
 
         @section('titulo', 'Categorias')
