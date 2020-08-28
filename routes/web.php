@@ -36,6 +36,8 @@ Route::resource('cliente','ClienteController');
 
 //Redireccionamiento a vista index proveedores
 Route::get('/Proveedores', 'ProveedorController@index')->name('proveedor');
+
+
 //Recursos para CRUD productos
 Route::resource('proveedor','ProveedorController');
 
@@ -59,8 +61,6 @@ Route::get('/descargarExcelventa','VentaController@descargaExcel')->name('ExcelV
 Route::get('/descargarExcelcompra','CompraController@descargaExcel')->name('ExcelCompra');
 
 Route::get('/NuevoUsuario','HomeController@ReUsuario')->name('ReUsuario')->middleware('role:admin');
-
-
 
 Auth::routes();
 

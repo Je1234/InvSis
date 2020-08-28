@@ -27,8 +27,8 @@ class CreateProductosTable extends Migration
             $table->string('ruta_imagen')->nullable()->default('default.png');
             $table->string('nombre',80)->nullable();
             $table->string('marca',60)->nullable();
-            $table->float('precio_venta',10,2)->nullable();
-            $table->float('precio_compra',10,2)->nullable();
+            $table->float('precio_venta',15,2)->nullable();
+            $table->float('precio_compra',15,2)->nullable();
             $table->integer('stock')->length(20)->nullable();
             $table->text('descripcion')->nullable();
            

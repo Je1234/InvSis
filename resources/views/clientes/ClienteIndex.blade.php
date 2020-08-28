@@ -248,16 +248,16 @@
                   </div>
                   <div class="modal-body">
                     <!-- Formulario -->
-                    <form method="POST" class="form-submit-limit" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
+                    <form method="POST" class="form-submit-limit" id="clientedit" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
                       <input type="hidden" id="id_documento" name="id_documento">
                       <div class="form-group">
                         <label>N° documento</label>
-                        <input type="text" name="documento" class="form-control" id="documento" placeholder="">
+                        <input type="text" name="id_documento" class="form-control" id="documento">
                       </div>
                       <div class="form-group">
-                        <label for="exampleFormControlSelect1">Tipo de documento</label>
+                        <label>Tipo de documento</label>
                         <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
                           <option value="">No tiene tipo de documento registrado</option>
                           @foreach($tipos as $t)
@@ -267,35 +267,35 @@
                       </div>
                       <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombres" class="form-control" id="nombre" >
+                        <input type="text" name="nombres" class="form-control" id="nombre">
                       </div>
                       <div class="form-group">
                         <label>Apellidos</label>
-                        <input type="text" name="apellidos" class="form-control" id="apellido" >
+                        <input type="text" name="apellidos" class="form-control" id="apellido">
                       </div>
                       <div class="form-group">
                         <label>Correo</label>
-                        <input type="text" name="correo" class="form-control" id="correo" placeholder="">
+                        <input type="text" name="correo" class="form-control" id="correo">
                       </div>
                       <div class="form-group">
                         <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" id="direccion" placeholder="">
+                        <input type="text" name="direccion" class="form-control" id="direccion">
                       </div>
                       <div class="form-group">
                         <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control" id="telefono" placeholder="">
+                        <input type="number" name="telefono" class="form-control" id="telefono">
                       </div>
                       <div class="form-group">
                         <label>Celular</label>
-                        <input type="number" name="celular" class="form-control" id="celular" placeholder="">
+                        <input type="number" name="celular" class="form-control" id="celular">
                       </div>
                       <div class="form-group">
                         <label>Fecha nacimiento</label>
-                        <input type="date" name="fecha_nacimiento" class="form-control" id="fecha" placeholder="">
+                        <input type="date" name="fecha_nacimiento" class="form-control" id="fecha">
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit">Actualizar</button>
+                        <button type="submit" class="btn btn-primary button-submit-limit editcliente">Actualizar</button>
                       </div>
 
 
@@ -435,11 +435,11 @@
             id_user: id_user,
             nombres: nombres,
             apellidos: apellidos,
-            correo:correo,
+            correo: correo,
             direccion: direccion,
             telefono: telefono,
-            celular:celular,
-            fecha_nacimiento:fecha_nacimiento,
+            celular: celular,
+            fecha_nacimiento: fecha_nacimiento,
             _token: _token
           },
           success: function(data) {
@@ -460,6 +460,56 @@
                 type: "error"
               })
             } else if (!data.error) {
+              setTimeout(function() {
+                location.reload();
+              }, 1000);
+            }
+          },
+          error: function(data) {
+            console.log(data);
+
+          }
+        });
+      });
+
+
+      $(".editcliente").click(function(e) {
+        e.preventDefault();
+        
+        let id_documento = $("#documento").val();
+        let nombres = $("#nombre").val();
+        let apellidos = $("#apellido").val();
+        let id_tipo_documento = $("select[name=id_tipo_documento]").val();
+        let correo = $("#correo").val();
+        let direccion = $("#direccion").val();
+        let telefono = $("#telefono").val();
+        let celular = $("#celular").val();
+        let fecha_nacimiento = $("#fecha").val();
+        let _token = $('meta[name="csrf-token"]').attr('content');
+        var dataString = $('#clientedit').serialize();
+       
+        $.ajax({
+          url: "{{route('cliente.update','id_documento')}}",
+          type: 'POST',
+          data:dataString ,
+          success: function(data) {
+          
+            if (data.error) {
+              var values = '';
+
+              jQuery.each(data.error, function(key, value) {
+                values += value + "<br>"
+              });
+              console.log(values);
+              swal({
+                title: "Ocurrio un error",
+                html: values,
+                timer: 2000,
+                showConfirmButton: false,
+                type: "error"
+              });
+            } else if (!data.error) {
+              $('select').selectpicker('refresh');
               setTimeout(function() {
                 location.reload();
               }, 1000);

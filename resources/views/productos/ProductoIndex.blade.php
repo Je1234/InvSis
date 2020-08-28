@@ -258,7 +258,7 @@
                         </a>
                       </div>
                       <div class="custom-file form-file-upload form-file-multiple">
-                        <input type="file" name="ruta_imagen" class="custom-file-input inputFileHidden " id="imagen">
+                        <input type="file" name="imagen" class="custom-file-input inputFileHidden " id="customFile">
                         <label class="custom-file-label" for="customFile">Escoger imagen de producto</label>
                       </div>
 
@@ -292,33 +292,33 @@
                   </div>
                   <div class="modal-body">
                     <!-- Formulario -->
-                    <form method="POST" class="form-submit-limit" action="{{route('producto.update','id_producto')}}" enctype="multipart/form-data">
+                    <form method="POST" class="form-submit-limit" id="editproducto" action="{{route('producto.update','id_producto')}}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
                       <input type="hidden" id="id_producto" name="id_producto">
                       <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" id="" placeholder="">
+                        <input type="text" name="nombre" id="nombre" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Precio venta</label>
-                        <input type="number" name="precio_venta" id="precio_venta" class="form-control" id="" placeholder="">
+                        <input type="number" name="precio_venta" id="precio_venta" class="form-control" >
                       </div>
                       <div class="form-group">
                         <label>Precio compra</label>
-                        <input type="number" name="precio_compra" id="precio_compra" class="form-control" id="" placeholder="">
+                        <input type="number" name="precio_compra" id="precio_compra" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Cantidad en stock</label>
-                        <input type="number" name="stock" id="stock" class="form-control" id="" placeholder="">
+                        <input type="number" name="stock" id="stock" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Marca</label>
-                        <input type="texts" name="marca" id="marca" class="form-control" id="" placeholder="">
+                        <input type="text" name="marca" id="marca" class="form-control">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Proveedor</label>
-                        <select class="form-control " name="id_proveedor" id="id_proveedor">
+                        <select class="form-control" name="id_proveedor" id="id_proveedor">
                           <option value="">No tiene proveedor registrado...</option>
                           @foreach($proveedor as $pro)
                           <option value="{{$pro->id_proveedor}}">{{$pro->nombre}}</option>
@@ -345,7 +345,7 @@
                         </select>
                       </div>
                       <div class="custom-file form-file-upload form-file-multiple">
-                        <input type="file" name="imagen" id="imagen" class="custom-file-input inputFileHidden " id="customFile">
+                        <input type="file" name="imagen" id="imagen" class="custom-file-input inputFileHidden">
                         <label class="custom-file-label" for="customFile">Escoger imagen de producto</label>
                       </div>
 
@@ -355,7 +355,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit">Actualizar</button>
+                        <button type="submit" class="btn btn-primary button-submit-limit editproducto">Actualizar</button>
                       </div>
 
 
@@ -504,7 +504,7 @@
         let _token = $('meta[name="csrf-token"]').attr('content');
 
         var gp = new FormData();
-        gp.append('ruta_imagen', $("#imagen").get(0).files[0]);
+        gp.append('imagen', $("#customFile").get(0).files[0]);
         gp.append('nombre', nombre);
         gp.append('precio_venta', precio_venta);
         gp.append('precio_compra', precio_compra);
@@ -514,14 +514,21 @@
         gp.append('id_categoria', id_categoria);
         gp.append('id_ubicacion', id_ubicacion);
         gp.append('descripcion', descripcion);
+        gp.append('id_user', id_user);
         gp.append('_token', _token);
+        console.log(nombre);
+        console.log(precio_compra);
+        console.log(precio_venta);
+        console.log(id_proveedor);
+        console.log(id_categoria);
+        console.log(gp.ruta_imagen);
         
         $.ajax({
           url: "{{route('producto.store')}}",
           type: "POST",
           data: gp,
           processData: false,
-    contentType: false,
+          contentType: false,
           success: function(data) {
 
 
@@ -536,6 +543,77 @@
                 title: "Ocurrio un error",
                 html: values,
                 timer: 3000,
+                showConfirmButton: false,
+                type: "error"
+              })
+            } else if (!data.error) {
+              $('select').selectpicker('refresh');
+              setTimeout(function() {
+                location.reload();
+              }, 1000);
+            }
+          },
+          error: function(data) {
+            console.log(data);
+
+          }
+        });
+      });
+
+
+
+      $(".editproducto").click(function(e) {
+        e.preventDefault();
+        let nombre = $("#nombre").val();
+        let id_producto = $("input[name=id_producto]").val();
+        let precio_venta = $("#precio_venta").val();
+        let precio_compra = $("#precio_compra").val();
+        let stock = $("#stock").val();
+        let marca = $("#marca").val();
+        let id_proveedor = $("#editproducto [name=id_proveedor]").val();
+        let id_categoria = $("#editproducto [name=id_categoria]").val();
+        let id_ubicacion = $("#editproducto [name=id_ubicacion]").val();
+        let ruta_imagen = $("#editproducto [name=ruta_imagen]").val();
+        let descripcion = $("#descripcion").val();
+        let id_user = $("input[name=id_user]").val();
+        let _token = $('meta[name="csrf-token"]').attr('content');
+        var dataString = $('#editproducto').serialize();
+        var gp = new FormData();
+        gp.append('imagen', $("#imagen").get(0).files[0]);
+        gp.append('nombre', nombre);
+        gp.append('precio_venta', precio_venta);
+        gp.append('precio_compra', precio_compra);
+        gp.append('stock', stock);
+        gp.append('marca', marca);
+        gp.append('id_producto', id_producto);
+        gp.append('id_proveedor', id_proveedor);
+        gp.append('id_categoria', id_categoria);
+        gp.append('id_ubicacion', id_ubicacion);
+        gp.append('descripcion', descripcion);
+        gp.append('_token', _token);
+        gp.append('_method', 'PUT');
+        
+        $.ajax({
+          url: "{{route('producto.update','id_producto')}}",
+          type: "POST",
+          data: gp,
+          
+          processData: false,
+          contentType: false,
+          success: function(data) {
+
+
+            if (data.error) {
+              var values = '';
+
+              jQuery.each(data.error, function(key, value) {
+                values += value + "<br>"
+              });
+              console.log(values);
+              swal({
+                title: "Ocurrio un error",
+                html: values,
+                timer: 2000,
                 showConfirmButton: false,
                 type: "error"
               })

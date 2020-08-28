@@ -58,10 +58,10 @@ class CategoriaController extends Controller
 
            return redirect()->route('categoria.index')->with('datos','Registro guardado correctamente');
            
-        }
+        }else{
      
         return response()->json(['error'=>$validatedData->errors()->all()]);
-        
+    }
         
     }
 
@@ -96,7 +96,27 @@ class CategoriaController extends Controller
      */
     public function update(Request $request)
     {
-        $categoria =array(
+        $validatedData = Validator::make($request->all(), [
+            'nom_categoria' => 'required|max:50',
+            
+        ],[
+            'nom_categoria.required' => 'El nombre de la categoria no debe estar vacio',
+            'nom_categoria.max' => 'El nombre de la categoria no debe exceder los :max caracteres',
+        ]);
+       
+       
+        if ($validatedData->passes()) {
+            $categoria = $request->all();
+           categorias::findOrFail($request->id_categoria)->update($categoria);
+
+           return redirect()->route('categoria.index')->with('datos','Registro actualizado correctamente');
+           
+        }else{
+     
+        return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
+
+       /* $categoria =array(
 
             "nom_categoria"=>$request->nom_categoria,
             
@@ -104,7 +124,7 @@ class CategoriaController extends Controller
         
         categorias::findOrFail($request->id_categoria)->update($categoria);
         
-        return redirect()->route('categoria.index')->with('datos','Registro actualizado correctamente');
+        return redirect()->route('categoria.index')->with('datos','Registro actualizado correctamente');*/
     }
 
     /**

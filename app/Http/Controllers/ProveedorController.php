@@ -130,9 +130,10 @@ class ProveedorController extends Controller
 
            return redirect()->route('proveedor.index')->with('datos','Registro guardado correctamente');
            
-        }
+        }else{
      
         return response()->json(['error'=>$validatedData->errors()->all()]);
+    }
      
     }
 

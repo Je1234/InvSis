@@ -62,9 +62,9 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'nombre' => 'required|max:20',
-            'precio_venta' => 'nullable|digits_between:1,10',
-            'precio_compra' => 'nullable|digits_between:1,10',
+            'nombre' => 'required|max:80',
+            'precio_venta' => 'nullable|digits_between:1,15',
+            'precio_compra' => 'nullable|digits_between:1,15',
             'stock' => 'nullable|digits_between:1,11',
             'marca' => 'nullable|max:60',
             'ruta_imagen' => 'nullable|mimes:jpeg,jpg,png|max:5000'
@@ -93,8 +93,6 @@ class ProductoController extends Controller
                 $entrada['ruta_imagen'] = $nombre;
                
             }
-
-
             productos::create($entrada);
             return redirect()->route('producto.index')->with('datos', 'Registro guardado correctamente');
         } else {
@@ -148,8 +146,80 @@ class ProductoController extends Controller
      */
     public function update(Request $request)
     {
+        $validatedData = Validator::make($request->all(), [
+            'nombre' => 'required|max:80',
+            'precio_venta' => 'nullable|digits_between:1,10',
+            'precio_compra' => 'nullable|digits_between:1,10',
+            'stock' => 'nullable|digits_between:1,11',
+            'marca' => 'nullable|max:60',
+            'ruta_imagen' => 'nullable|mimes:jpeg,jpg,png|max:5000'
+        ],[
+            'nombre.required' => 'El nombre del producto es requerido',
+            'nombre.max' => 'El nombre del producto no debe exceder los :max caracteres',
+            'precio_venta.digits_between' => 'El precio de venta no debe exceder los 15 digitos',
+            'precio_compra.digits_between' => 'El precio de compra no debe exceder los 15 digitos',
+            'stock.digits_between' => 'La cantidad de stock no debe exceder los 15 digitos',
+            'marca.max' => 'La marca no debe exceder los :max caracteres',
+            'ruta_imagen.mimes' => 'La imagen solo puede ser formato. jpeg,png,jpg',
+            'ruta_imagen.max' => 'La imagen no puede exceder los 5Mb de peso',
+           
+
+
+        ]);
+
+        if ($validatedData->passes()) {
+
+            if($archivo=$request->hasFile('imagen')){
+                $archivo = $request->imagen->store('uploads','public');
+                $nombre = $request->imagen->hashName();
+                $entrada=$nombre;
+    
+                
+                $producto =array(
+    
+                    "id_ubicacion"=>$request->id_ubicacion,
+                    "id_proveedor"=>$request->id_proveedor,
+                    "nombre"=>$request->nombre,
+                    "marca"=>$request->marca,
+                    "precio_venta"=>$request->precio_venta,
+                    "precio_compra"=>$request->precio_compra,
+                    "id_categoria"=>$request->id_categoria,
+                    "stock"=>$request->stock,
+                    "descripcion"=>$request->descripcion,
+                    "ruta_imagen"=>$entrada
+                );
+            }else{
+                $producto =array(
+    
+                    "id_ubicacion"=>$request->id_ubica,
+                    "id_proveedor"=>$request->id_proveedor,
+                    "nombre"=>$request->nombre,
+                    "marca"=>$request->marca,
+                    "precio_venta"=>$request->precio_venta,
+                    "precio_compra"=>$request->precio_compra,
+                    "id_categoria"=>$request->id_categoria,
+                    "stock"=>$request->stock,
+                    "descripcion"=>$request->descripcion,
+                    
+                );
+            }
+
+            $es = productos::findOrFail($request->id_producto);
+            $eliminarc = storage_path() . '/app/public/uploads/' . $es->ruta_imagen;
+
+
+            //Eliminar imagen de producto si existe
+            if (file_exists($eliminarc) && $es->ruta_imagen != 'default.png') {
+                File::delete($eliminarc);
+            }
+            $es->update($producto);
+            return redirect()->route('producto.index')->with('datos', 'Registro guardado correctamente');
+        } else {
+
+            return response()->json(['error' => $validatedData->errors()->all()]);
+        }
        
-        if($archivo=$request->hasFile('imagen')){
+        /*if($archivo=$request->hasFile('imagen')){
             $archivo = $request->imagen->store('uploads','public');
             $nombre = $request->imagen->hashName();
             $entrada=$nombre;
@@ -195,7 +265,7 @@ class ProductoController extends Controller
 
             return redirect()->route('producto.index')->with('datos','Registro actualizado correctamente');
 
-           }
+           }*/
         
         //echo "<pre>"; print_r($producto); die;
        /* productos::findOrFail($request->id_producto)->update($producto);

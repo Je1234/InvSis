@@ -168,7 +168,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary button-submit-limit">Actualizar</button>
+                                                <button type="submit" class="btn btn-primary button-submit-limit editcategoria">Actualizar</button>
                                             </div>
 
 
@@ -248,6 +248,52 @@
                                 type: "error"
                             })
                         }else if(!data.error){
+                            setTimeout(function() {
+                                location.reload(); 
+                            }, 1000);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+
+                    }
+                });
+            });
+
+            $(".editcategoria").click(function(e) {
+           e.preventDefault();
+                let id_categoria = $("input[name=id_categoria]").val();
+                let nom_categoria= $("#nom_categoria").val();
+                let _token = $('meta[name="csrf-token"]').attr('content');
+                
+              
+                $.ajax({
+                    url: "{{route('categoria.update','id_categoria')}}",
+                    type: 'POST',
+                    data: {
+                        nom_categoria: nom_categoria,
+                        id_categoria:id_categoria,
+                        id_categoria:id_categoria,
+                        _token: _token,
+                        _method:'PUT'
+                    },
+                    success: function(data) {      
+                        if (data.error) {
+                            var values = '';
+                        
+                            jQuery.each(data.error, function(key, value) {
+                                values +=  value + "<br>"
+                            });
+                                 console.log(values);
+                            swal({
+                                title: "Ocurrio un error",
+                                html: values ,
+                                timer: 2000,
+                                showConfirmButton: false,
+                                type: "error"
+                            });
+                        }else if(!data.error){
+                            $('select').selectpicker('refresh');
                             setTimeout(function() {
                                 location.reload(); 
                             }, 1000);

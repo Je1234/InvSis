@@ -403,7 +403,6 @@
 </div>
 
 <script>
-
             $(".gproveedor").click(function(e) {
                 let nombre = $("input[name=nombre]").val();
                 let direccion = $("input[name=direccion]").val();
@@ -452,35 +451,31 @@
                     }
                 });
             });
-        
-           
-      
        
-        </script>
-<script>
-    $(".editproveedor").click(function(e) {
-        e.preventDefault();
-                let nombre = $("input[name=nombre]").val();
-                let direccion = $("input[name=direccion]").val();
-                let telefono= $("input[name=telefono]").val();
-                let estado = $("select[name=estado]").val();
-            
+     $(".editproveedor").click(function(e) {
+           e.preventDefault();
+                let id_proveedor = $("input[name=id_proveedor]").val();
+                let nombre = $("#nombre").val();
+                let direccion = $("#direccion").val();
+                let telefono= $("#telefono").val();
+                let estado = $("#estado").val();
+                let id_user = $("input[name=id_user]").val();
                 let _token = $('meta[name="csrf-token"]').attr('content');
                 
+              
                 $.ajax({
                     url: "{{route('proveedor.update','id_proveedor')}}",
-                    type: "PUT",
+                    type: 'POST',
                     data: {
-                      
                         nombre: nombre,
                         direccion:direccion,
                         telefono: telefono,
                         estado:estado,
-                        _token: _token
+                        id_proveedor:id_proveedor,
+                        _token: _token,
+                        _method:'PUT'
                     },
-                    success: function(data) {
-                       
-                        console.log(nombre);
+                    success: function(data) {      
                         if (data.error) {
                             var values = '';
                         
@@ -494,7 +489,7 @@
                                 timer: 3000,
                                 showConfirmButton: false,
                                 type: "error"
-                            })
+                            });
                         }else if(!data.error){
                             setTimeout(function() {
                                 location.reload(); 
