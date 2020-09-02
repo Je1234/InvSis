@@ -23,7 +23,7 @@ The above copyright notice and this permission notice shall be included in all c
     @yield('titulo','InvSis')
   </title>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-  
+
 
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -38,9 +38,9 @@ The above copyright notice and this permission notice shall be included in all c
 
   <link href="{{asset('assets/css/bootstrap-select.css')}}" rel="stylesheet" />-->
 
-  <script src="{{asset('assets/js/core/jquery.min.js')}}"></script> 
-  <link href="{{asset('css/all.css')}}" rel="stylesheet"/>
- 
+  <script src="{{asset('assets/js/core/jquery.min.js')}}"></script>
+  <link href="{{asset('css/all.css')}}" rel="stylesheet" />
+
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
 
 </head>
@@ -72,7 +72,7 @@ The above copyright notice and this permission notice shall be included in all c
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a href="#" class="simple-text logo-normal">
           InvSis
         </a></div>
       <div class="sidebar-wrapper">
@@ -210,7 +210,7 @@ The above copyright notice and this permission notice shall be included in all c
       </div>
     </div>
 
-    
+
   </div>
   </div>
   <div class="fixed-plugin">
@@ -221,7 +221,7 @@ The above copyright notice and this permission notice shall be included in all c
       <ul class="dropdown-menu">
         <li class="header-title"> Sidebar Filters</li>
         <li class="adjustments-line">
-          <a href="javascript:void(0)" class="switch-trigger active-color">
+          <a href="javascript:void(0)" class="switch-trigger active-color card-header-primary">
             <div class="badge-colors ml-auto mr-auto">
               <span class="badge filter badge-purple" data-color="purple"></span>
               <span class="badge filter badge-azure" data-color="azure"></span>
@@ -281,7 +281,7 @@ The above copyright notice and this permission notice shall be included in all c
         <li class="button-container github-star">
 
         </li>
-       
+
       </ul>
     </div>
   </div>
@@ -337,7 +337,7 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{{asset('assets/js/venta.js')}}" type="text/javascript"></script>
 
   <script src="{{asset('assets/js/compras.js')}}" type="text/javascript"></script>
-  
+
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -393,15 +393,36 @@ The above copyright notice and this permission notice shall be included in all c
         });
 
         $('.fixed-plugin .background-color .badge').click(function() {
+
           $(this).siblings().removeClass('active');
           $(this).addClass('active');
+           document.body.classList.toggle('dark');
 
-          var new_color = $(this).data('background-color');
+          var new_color = $(this).data('background-color'); 
 
           if ($sidebar.length != 0) {
             $sidebar.attr('data-background-color', new_color);
+
+          }
+
+          if(document.body.classList.contains('dark')&& new_color === 'black'){
+            localStorage.setItem('modo-oscuro','true');
+
+          }else{
+            localStorage.setItem('modo-oscuro','false')
           }
         });
+
+        if(localStorage.getItem('modo-oscuro') === 'true'){
+          document.body.classList.add('dark');
+          $sidebar.attr('data-background-color', 'black');
+        }else{
+          document.body.classList.remove('dark');
+        }
+
+       
+
+      
 
         $('.fixed-plugin .img-holder').click(function() {
           $full_page_background = $('.full-page-background');

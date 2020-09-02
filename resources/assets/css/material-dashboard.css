@@ -59,7 +59,132 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fafafa;
+  transition: .3s ease all;
+
 }
+body.dark {
+background:#31363D;
+
+}
+
+body.dark .card {
+  background:#23272A;
+}
+
+body.dark .card-title {
+    color:white;
+}
+body.dark .card .card-header.card-header-icon .card-title, .card .card-header.card-header-text .card-title{
+  color:white;
+}  
+
+body.dark small{
+  color:white;
+} 
+body.dark .form-control[readonly]{
+  background-color:inherit;
+} 
+
+body.dark h2 {
+  color:white;
+}
+body.dark h3 {
+  color:white;
+}  
+
+body.dark ul li {
+  color:white;
+} 
+
+body.dark .card-header .modal-content{
+    background:#23272A;
+    
+}
+
+body.dark .modal-content {
+  background:#23272A;
+  color:white;
+  
+}
+
+/*body.dark .btn-black {
+  background:#23272A;
+  
+}*/
+
+body.dark tr td {
+  color:white;
+  
+}
+
+body.dark tr th {
+  color:white;
+  
+}
+body.dark .dropdown {
+  color:white;
+  
+}
+body.dark .navbar-brand {
+  color:white;
+  
+}
+
+body.dark .modal-title {
+  color:white;
+  
+}
+
+
+body.dark input[type=text] {
+  color:white;
+  
+}
+
+
+body.dark input[type=number] {
+  color:white;
+  
+}
+
+body.dark input[type=search] {
+  color:white;
+  
+}
+
+
+body.dark input[type=date] {
+  color:white;
+  
+}
+body.dark .custom-file {
+ 
+  color:white;
+  
+}
+
+body.dark textarea {
+  color:white;
+  
+}
+body.dark .form-control {
+  color:white;
+  
+}
+
+
+body.dark .dropdown-menu {
+  background:#131517;
+
+  color:rgb(39, 38, 38);
+  
+} 
+
+body.dark .dropdown-item {
+
+  color:white;
+  
+} 
 
 [tabindex="-1"]:focus {
   outline: 0 !important;

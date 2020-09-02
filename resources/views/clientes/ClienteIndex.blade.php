@@ -91,7 +91,7 @@
           <!--Tabla de clientes-->
           <div class="table-responsive">
             <table class="table table-shopping">
-              <thead class=" text-primary">
+              <thead class="text-primary">
                 <th>
                   #
                 </th>

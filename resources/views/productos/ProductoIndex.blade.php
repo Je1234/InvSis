@@ -97,7 +97,7 @@
           <!--Tabla de productos-->
           <div class="table-responsive">
             <table class="table table-shopping">
-              <thead class=" text-primary">
+              <thead class="text-primary">
                 <th>
                   ID
                 </th>
@@ -214,7 +214,7 @@
                       </div>
                       <div class="form-group">
                         <label>Marca</label>
-                        <input type="texts" name="marca" class="form-control">
+                        <input type="text" name="marca" class="form-control">
                       </div>
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">Proveedor</label>
