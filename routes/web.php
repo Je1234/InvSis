@@ -15,30 +15,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('ini')->middleware('auth');
 //Redireccionamiento a vista index categorias
+Route::get('/Categorias', 'CategoriaController@index')->name('categorias');
+//Recursos para CRUD compras
+Route::resource('categoria','CategoriaController');
+//Redireccionamiento a vista index categorias
 Route::get('/Compras', 'CompraController@index')->name('compras');
-//Recursos para CRUD productos
+//Recursos para CRUD compras
+Route::resource('compra','CompraController');
+
+Route::get('/Compras', 'CompraController@index')->name('compras');
+//Recursos para CRUD roles
 Route::resource('compra','CompraController');
 
 //Redireccionamiento a vista index categorias
-Route::get('/Categorias', 'CategoriaController@index')->name('categorias');
+Route::get('/RolesADMIN', 'RolesYUsersController@index')->name('roles');
 //Recursos para CRUD productos
-Route::resource('categoria','CategoriaController');
+Route::resource('roles','RolesYUsersController');
 
 //Redireccionamiento a vista index productos
 Route::get('/Productos', 'ProductoController@index')->name('productos');
 //Recursos para CRUD productos
 Route::resource('producto','ProductoController');
 
-//Redireccionamiento a vista index productos
+//Redireccionamiento a vista index clientes
 Route::get('/Clientes', 'ClienteController@index')->name('clientes');
-//Recursos para CRUD productos
+//Recursos para CRUD clientes
 Route::resource('cliente','ClienteController');
 
 //Redireccionamiento a vista index proveedores
 Route::get('/Proveedores', 'ProveedorController@index')->name('proveedor');
 
-
-//Recursos para CRUD productos
+//Recursos para CRUD proveedores
 Route::resource('proveedor','ProveedorController');
 
 //Redireccionamiento a vista index ventas
@@ -46,21 +53,33 @@ Route::get('/Ventas','VentaController@index')->name('venta');
 //Recursos para CRUD ventas
 Route::resource('venta','VentaController');
 
+
+//Ruta Agregar cliente en vista ventas
 Route::post('/AgregarCliente','VentaController@storeCliente')->name('clienteD');
 
+//Ruta Agregar proveedor en vista compras
 Route::post('/AgregarProveedor','CompraController@storeProveedor')->name('ProveedorC');
 
+//Ruta Agregar producto en vista compras
 Route::post('/AgregarProducto','CompraController@storeProducto')->name('ProductoC');
 
+//Ruta descargar PDF de compras
 Route::get('/descargarPDFcompra/{id}','CompraController@descargaPDF')->name('PdfCompra');
 
+//Ruta descargar PDF de ventas
 Route::get('/descargarPDFventa/{id}','VentaController@descargaPDF')->name('PdfVenta');
 
+//Ruta descargar excel de ventas
 Route::get('/descargarExcelventa','VentaController@descargaExcel')->name('ExcelVenta');
 
+//Ruta descargar excel de compras
 Route::get('/descargarExcelcompra','CompraController@descargaExcel')->name('ExcelCompra');
 
+//Redireccion nuevo usuario
 Route::get('/NuevoUsuario','HomeController@ReUsuario')->name('ReUsuario')->middleware('role:admin');
+
+//Eliminar usuario
+Route::delete('/EliminarUsuario/{id}','RolesYUsersController@destroyUser')->name('Dusuario')->middleware('role:admin');
 
 Auth::routes();
 

@@ -60,6 +60,34 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">{{ __('Roles') }}</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input " type="checkbox" name="roles[]" value="admin">
+                                    Admin
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+
+                            </div>
+                            <div class="form-check">
+                                <div class="col-md-6">
+                                    <label class="form-check-label">
+
+                                        <input class="form-check-input" type="checkbox" name="roles[]" value="cliente">
+                                        Cliente
+
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                       
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

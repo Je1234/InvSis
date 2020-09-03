@@ -110,10 +110,22 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
           @role('admin')
 
+          @if (Route::has('register'))
           <li class="nav-item active">
-            <a class="nav-link" href="{{ route('ReUsuario') }}">
+            <a class="nav-link" href="{{ route('register') }}">
               <i class="material-icons">how_to_reg</i>
               <p>{{ __('Registrar Usuario') }}</p>
+            </a>
+          </li>
+          @endif
+          @endrole
+          
+          @role('admin')
+
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ route('roles') }}">
+              <i class="material-icons">how_to_reg</i>
+              <p>{{ __('Roles y permisos') }}</p>
             </a>
           </li>
 
@@ -233,17 +245,17 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="clearfix"></div>
           </a>
         </li>
-        <li class="header-title"> Estilo</li>
+        <li class="header-title"> Modo oscuro o claro</li>
         <li class="adjustments-line">
           <a href="javascript:void(0)" class="switch-trigger background-color">
             <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-white" data-background-color="white"></span>
-              <span class="badge filter badge-black" data-background-color="black"></span>
+              <button class="badge filter badge-white " id="button-white" data-background-color="white" disabled></button>
+              <button class="badge filter badge-black " id="button-black" data-background-color="black"></button>
             </div>
             <div class="clearfix"></div>
           </a>
         </li>
-        <li class="header-title">Images</li>
+        <li class="header-title">Imagenes navegacion</li>
         <li class="active">
           <a class="img-holder switch-trigger" href="javascript:void(0)">
             <img src="assets/img/sidebar-1.jpg" alt="">
@@ -264,6 +276,7 @@ The above copyright notice and this permission notice shall be included in all c
             <img src="assets/img/sidebar-4.jpg" alt="">
           </a>
         </li>
+        @role('admin')
         <li class="button-container">
           <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
         </li>
@@ -278,6 +291,7 @@ The above copyright notice and this permission notice shall be included in all c
             View Documentation
           </a>
         </li>
+        @endrole
         <li class="button-container github-star">
 
         </li>
@@ -338,6 +352,8 @@ The above copyright notice and this permission notice shall be included in all c
 
   <script src="{{asset('assets/js/compras.js')}}" type="text/javascript"></script>
 
+  <script src="{{asset('assets/js/roles.js')}}" type="text/javascript"></script>
+
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -396,33 +412,52 @@ The above copyright notice and this permission notice shall be included in all c
 
           $(this).siblings().removeClass('active');
           $(this).addClass('active');
-           document.body.classList.toggle('dark');
+          document.body.classList.toggle('dark');
 
-          var new_color = $(this).data('background-color'); 
+          var new_color = $(this).data('background-color');
 
           if ($sidebar.length != 0) {
             $sidebar.attr('data-background-color', new_color);
 
           }
 
-          if(document.body.classList.contains('dark')&& new_color === 'black'){
-            localStorage.setItem('modo-oscuro','true');
+          if (document.body.classList.contains('dark') && new_color === 'black') {
+            localStorage.setItem('modo-oscuro', 'true');
 
-          }else{
-            localStorage.setItem('modo-oscuro','false')
+
+          } else {
+            localStorage.setItem('modo-oscuro', 'false')
           }
         });
 
-        if(localStorage.getItem('modo-oscuro') === 'true'){
+        $('#button-black').on('click', function() {
+
+          $('#button-white').removeAttr('disabled');
+
+          $('#button-black').attr('disabled', 'disabled');
+        });
+
+        $('#button-white').on('click', function() {
+
+          $('#button-black').removeAttr('disabled');
+
+          $('#button-white').attr('disabled', 'disabled');
+        });
+
+
+
+        if (localStorage.getItem('modo-oscuro') === 'true') {
           document.body.classList.add('dark');
           $sidebar.attr('data-background-color', 'black');
-        }else{
+          $('#button-white').removeAttr('disabled');
+          $('#button-black').attr('disabled', 'disabled');
+        } else {
           document.body.classList.remove('dark');
         }
 
-       
 
-      
+
+
 
         $('.fixed-plugin .img-holder').click(function() {
           $full_page_background = $('.full-page-background');

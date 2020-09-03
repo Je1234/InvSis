@@ -46,10 +46,21 @@ class HomeController extends Controller
     {
         /*$rolA = Role::create(['name' => 'admin']);
         $rolCliente = Role::create(['name' => 'cliente']);
-        $permisoA = Permission::create(['name' => 'crear-user']);
+        Permission::create(['name' => 'crear-user']);
+        Permission::create(['name' => 'eliminar-user']);
+        Permission::create(['name' => 'editar-user']);
+        Permission::create(['name' => 'crear-rol']);
+        Permission::create(['name' => 'eliminar-rol']);
+        Permission::create(['name' => 'editar-rol']);
+        
 
        
-        $permisoA->assignRole($rolA);*/
+        $permisoA->assignRole($rolA);
+        $permisoB->assignRole($rolA);
+        $permisoC->assignRole($rolA);
+        $permisoD->assignRole($rolA);
+        $permisoE->assignRole($rolA);
+        $permisoF->assignRole($rolA);*/
 
         /*$Admin = User::find(1);
 
@@ -58,8 +69,12 @@ class HomeController extends Controller
         /*$cliente = User::find(2);
 
         $cliente->assignRole('cliente');*/
+    
+     
 
-        //$ventas= DB::table('ventas')->pluck('precio_total');
+       
+
+  
         return redirect()->route('ini');
     }
 }

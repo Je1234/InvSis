@@ -100,6 +100,10 @@ body.dark .card-header .modal-content{
     background:#23272A;
     
 }
+body.dark #button-white{
+  background:white;
+  
+}
 
 body.dark .modal-content {
   background:#23272A;
@@ -140,7 +144,11 @@ body.dark input[type=text] {
   color:white;
   
 }
+body.dark .dropdown-menu{
+  background: #131517;
+  color: white;
 
+}
 
 body.dark input[type=number] {
   color:white;
@@ -149,6 +157,11 @@ body.dark input[type=number] {
 
 body.dark input[type=search] {
   color:white;
+  
+}
+
+body.dark .form-check .form-check-sign .check {
+  border: 1px solid rgb(226 215 215 / 54%);
   
 }
 
