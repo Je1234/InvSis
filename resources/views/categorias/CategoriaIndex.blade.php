@@ -22,9 +22,14 @@
                 <div class="card-header card-header-primary">
                     <h4 class="card-title">Lista de Categorias</h4>
                     <div class="form-check form-check-inline float-right">
-
-                        <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertCat"><i class="material-icons">add</i>Agregar </button>
-
+                        <div class="btn-toolbar" role="group" aria-label="Basic example">
+              
+                            <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertCat"><i class="material-icons">add</i>Agregar </button>
+                           
+                            @if(!$categoria->isEmpty())
+                            <a type="button" href="{{route('IndexRcategoria')}}" class="btn btn-black"><i class="material-icons">restore_from_trash</i>Recuperar borrados</a>
+                            @endif
+                        </div>
                     </div>
 
                 </div>
@@ -39,8 +44,10 @@
                         </h1>
                         <h2>Aun no hay registros guardados</h2>
                         <div class="form-check form-check-inline float-right">
-
-                            <a type="button" href="{{route('productos')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar a productos </a>
+                        <div class="btn-toolbar" role="group" aria-label="Basic example">
+                        <a type="button" href="{{route('productos')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar a productos </a>
+                        </div>
+                       
 
                         </div>
                     </div>
@@ -237,7 +244,7 @@
                         if (data.error) {
                             var values = '';
                             jQuery.each(data.error, function(key, value) {
-                                values +=  value 
+                                values += value
                             });
 
                             swal({
@@ -247,9 +254,9 @@
                                 showConfirmButton: false,
                                 type: "error"
                             })
-                        }else if(!data.error){
+                        } else if (!data.error) {
                             setTimeout(function() {
-                                location.reload(); 
+                                location.reload();
                             }, 1000);
                         }
                     },
@@ -261,41 +268,41 @@
             });
 
             $(".editcategoria").click(function(e) {
-           e.preventDefault();
+                e.preventDefault();
                 let id_categoria = $("input[name=id_categoria]").val();
-                let nom_categoria= $("#nom_categoria").val();
+                let nom_categoria = $("#nom_categoria").val();
                 let _token = $('meta[name="csrf-token"]').attr('content');
-                
-              
+
+
                 $.ajax({
                     url: "{{route('categoria.update','id_categoria')}}",
                     type: 'POST',
                     data: {
                         nom_categoria: nom_categoria,
-                        id_categoria:id_categoria,
-                        id_categoria:id_categoria,
+                        id_categoria: id_categoria,
+                        id_categoria: id_categoria,
                         _token: _token,
-                        _method:'PUT'
+                        _method: 'PUT'
                     },
-                    success: function(data) {      
+                    success: function(data) {
                         if (data.error) {
                             var values = '';
-                        
+
                             jQuery.each(data.error, function(key, value) {
-                                values +=  value + "<br>"
+                                values += value + "<br>"
                             });
-                                 console.log(values);
+                            console.log(values);
                             swal({
                                 title: "Ocurrio un error",
-                                html: values ,
+                                html: values,
                                 timer: 2000,
                                 showConfirmButton: false,
                                 type: "error"
                             });
-                        }else if(!data.error){
+                        } else if (!data.error) {
                             $('select').selectpicker('refresh');
                             setTimeout(function() {
-                                location.reload(); 
+                                location.reload();
                             }, 1000);
                         }
                     },

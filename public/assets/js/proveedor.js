@@ -1,4 +1,17 @@
+//ELIMINAR PROVEEDOR
 $('#EliminarProv').on('show.bs.modal',function(event){
+
+    var button = $(event.relatedTarget)
+    var id_proveedor = button.data('id_proveedor')
+
+    var modal = $(this)
+
+    modal.find('.modal-body #id_proveedor').val(id_proveedor);
+
+});
+
+//RECUPERAR PROVEEDOR
+$('#RecuperarProv').on('show.bs.modal',function(event){
 
     var button = $(event.relatedTarget)
     var id_proveedor = button.data('id_proveedor')

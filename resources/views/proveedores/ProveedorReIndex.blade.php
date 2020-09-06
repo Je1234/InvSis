@@ -8,13 +8,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                    <h4 class="card-title">Lista de proveedores</h4>
+
+                    <h4 class="card-title">Lista de proveedores eliminados</h4>
                     <div class="form-check form-check-inline float-right">
                         <div class="btn-toolbar" role="group">
-                            <button type="" class="btn btn-black float-right" data-toggle="modal" data-target="#InsertProv"><i class="material-icons">add</i>Agregar </button>
-
-                            <a type="button" href="{{route('IndexRproveedor')}}" class="btn btn-black float-right"><i class="material-icons">restore_from_trash</i>Recuperar borrados</a>
-
+                           @if(!$proveedorB->isEmpty())
+                            <button type="button" data-toggle="modal" data-target="#RecuperarAllProv" class="btn btn-black col-xs-1"><i class="material-icons">restore_from_trash</i>Recuperar todo</button>
+                            @endif
+                            <a type="button" href="{{route('proveedor.index')}}" class="btn btn-black"><i class="material-icons">reply</i>Regresar a proveedores</a>
                         </div>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
                             <small>¡Oops!</small>
 
                         </h1>
-                        <h2>Aun no hay proveedores registrados</h2>
+                        <h2>Aun no hay registros</h2>
                     </div>
                     @elseif($proveedorB->isEmpty())
                     <div class="col-xs-12 col-md-12 error404 text center">
@@ -59,7 +60,7 @@
                         @if(($nombre))
                         <div class=" input-group float-right ">
 
-                            <a type="button" href="{{route('proveedor')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar </a>
+                            <a type="button" href="{{route('IndexRproveedor')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar </a>
 
                         </div>
                         @endif
@@ -77,9 +78,8 @@
                                         {{$p->nombre}}
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </a>
-                                    <button type="button" class="btn btn-black float-right btn-sm" data-id_proveedor="{{$p->id_proveedor}}" data-nombre="{{$p->nombre}}" data-direccion="{{$p->direccion}}" data-telefono="{{$p->telefono}}" data-estado="{{$p->estado}}" data-toggle="modal" data-target="#VerProv" rel="tooltip"><i class="material-icons">visibility</i></button>
-                                    <button type="button" class="btn btn-black float-right btn-sm" data-id_proveedor="{{$p->id_proveedor}}" data-nombre="{{$p->nombre}}" data-direccion="{{$p->direccion}}" data-telefono="{{$p->telefono}}" data-estado="{{$p->estado}}" data-toggle="modal" data-target="#EditProv" rel="tooltip"><i class="material-icons">edit</i></button>
-                                    <button type="button" class="btn btn-black float-right btn-sm" data-id_proveedor="{{$p->id_proveedor}}" data-toggle="modal" data-target="#EliminarProv" rel="tooltip"><i class="material-icons">close</i></button>
+
+                                    <button type="button" class="btn btn-black float-right btn-sm" data-id_proveedor="{{$p->id_proveedor}}" data-toggle="modal" data-target="#RecuperarProv" rel="tooltip"><i class="material-icons">reply</i></button>
                                 </h5>
                             </div>
                             <div id="collapse{{$i}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$i}}" data-parent="#accordion">
@@ -142,156 +142,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Modal Agregar-->
-<div class="modal fade" id="InsertProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Insertar proveedor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulario -->
-                <form class="form-submit-limit" method="POST" action="{{route('proveedor.store')}}">
-                    @csrf
-                    <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
-
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Estado</label>
-                        <select class="form-control" name="estado" id="">
-                            <option value="">Seleccionar una opcion...</option>
-                            <option value="1">Disponible</option>
-                            <option value="0">No disponible</option>
-
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit gproveedor">Guardar</button>
-                    </div>
-
-
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!--Modal Editar-->
-<div class="modal fade" id="EditProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar proveedor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulario -->
-                <form class="form-submit-limit" id="formedit" method="POST" action="{{route('proveedor.update','id_proveedor')}}">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" id="id_proveedor" name="id_proveedor">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre">
-                    </div>
-                    <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" id="direccion">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control" id="telefono">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Estado</label>
-                        <select class="form-control" name="estado" id="estado">
-                            <option value=" ">No tiene estado registrado</option>
-                            <option value="1">Disponible</option>
-                            <option value="0">No disponible</option>
-
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit editproveedor">Actualizar</button>
-                    </div>
-
-
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!--Modal Ver-->
-<div class="modal fade" id="VerProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ver proveedor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulario -->
-                <form method="GET" action="{{route('proveedor.update','id_proveedor')}}">
-                    @csrf
-
-                    <input type="hidden" id="id_proveedor" name="id_proveedor">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" id="direccion" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control" id="telefono" disbaled>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Estado</label>
-                        <select class="selectpicker form-control" name="estado" id="estado" disabled>
-                            <option value="">No tiene estado seleccionado</option>
-                            <option value="1">Disponible</option>
-                            <option value="0">No disponible</option>
-
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Regresar</button>
-                    </div>
-
-
-                </form>
-            </div>
-
         </div>
     </div>
 </div>
@@ -382,28 +232,57 @@
 
 
 
-<!--Modal Eliminar-->
-<div class="modal fade" id="EliminarProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--Modal recuperar proveedor-->
+<div class="modal fade" id="RecuperarProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar proveedor</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Recuperar proveedor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form class="form-submit-limit" action="{{route('proveedor.destroy','id_proveedor')}}" method="POST">
+                <form class="form-submit-limit" action="{{route('Rproveedor')}}" method="POST">
                     @csrf
-                    @method('DELETE')
+                    @method('GET')
                     <input type="hidden" id="id_proveedor" name="id_proveedor">
-                    <p class="text-center">¿Estas seguro de eliminar el registro?</p>
+                    <p class="text-center">¿Estas seguro de recuperar el registro?</p>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary button-submit-limit">Eliminar</button>
+                <button type="submit" class="btn btn-primary button-submit-limit">Recuperar</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal recuperar todo-->
+<div class="modal fade" id="RecuperarAllProv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header header-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Recuperar todo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario -->
+                <form class="form-submit-limit" action="{{route('RAproveedor')}}" method="POST">
+                    @csrf
+                    @method('GET')
+                    <input type="hidden" id="id_proveedor" name="id_proveedor">
+                    <p class="text-center">¿Estas seguro de recuperar todos los registros?</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary button-submit-limit">Recuperar</button>
 
             </div>
             </form>

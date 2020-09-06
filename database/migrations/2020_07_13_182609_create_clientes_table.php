@@ -28,6 +28,7 @@ class CreateClientesTable extends Migration
             $table->string('telefono', 15)->nullable();
             $table->string('celular', 15)->nullable();
             $table->date('fecha_nacimiento')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

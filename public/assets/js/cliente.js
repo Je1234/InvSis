@@ -10,6 +10,18 @@ $('#EliminarCliente').on('show.bs.modal',function(event){
 
 });
 
+//RECUPERAR CLIENTE
+$('#RecuperarCliente').on('show.bs.modal',function(event){
+
+    var button = $(event.relatedTarget)
+    var id_cliente = button.data('id_cliente')
+
+    var modal = $(this)
+
+    modal.find('.modal-body #id_documento').val(id_cliente);
+
+});
+
 //VER CLIENTE
 $('#VerCliente').on('show.bs.modal',function(event){
 

@@ -81,6 +81,36 @@ Route::get('/NuevoUsuario','HomeController@ReUsuario')->name('ReUsuario')->middl
 //Eliminar usuario
 Route::delete('/EliminarUsuario/{id}','RolesYUsersController@destroyUser')->name('Dusuario')->middleware('role:admin');
 
+
+//Index Recuperar categorias
+Route::get('/Recuperar categorias','CategoriaController@indexRecoveryCategoria')->name('IndexRcategoria');
+
+//Recuperar categorias
+Route::get('/RecuperarCategoria','CategoriaController@RecoveryCategoria')->name('Rcategoria');
+
+//Recuperar todas las categorias
+Route::get('/RecuperarTodoC','CategoriaController@RecoveryAllCategoria')->name('RAcategoria');
+
+//Index Recuperar cliente
+Route::get('/Recuperar clientes','ClienteController@indexRecoveryCliente')->name('IndexRcliente');
+
+//Recuperar clientes
+Route::get('/RecuperarCliente','ClienteController@RecoveryCliente')->name('Rcliente');
+
+//Recuperar todas los clientes
+Route::get('/RecuperarTodoCliente','ClienteController@RecoveryAllCliente')->name('RAcliente');
+
+//Index Recuperar proveedores
+Route::get('/Recuperar proveedores','ProveedorController@indexRecoveryProveedor')->name('IndexRproveedor');
+
+//Recuperar proveedores
+Route::get('/RecuperarProveedor','ProveedorController@RecoveryProveedor')->name('Rproveedor');
+
+//Recuperar todas los proveedores
+Route::get('/RecuperarTodoProveedor','ProveedorController@RecoveryAllProveedor')->name('RAproveedor');
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

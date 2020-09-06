@@ -21,11 +21,13 @@
         <div class="card-header card-header-primary">
           <h4 class="card-title">Lista de clientes</h4>
           <div class="form-check form-check-inline float-right">
-
-            <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertCliente"><i class="material-icons">add</i>Agregar </button>
-
+            <div class="btn-toolbar" role="group" aria-label="Basic example">
+              <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertCliente"><i class="material-icons">add</i>Agregar </button>
+              @if(!$clientesB->isEmpty())
+              <a type="button" href="{{route('IndexRcliente')}}" class="btn btn-black"><i class="material-icons">restore_from_trash</i>Recuperar borrados</a>
+              @endif
+            </div>
           </div>
-
         </div>
         <div class="card-body">
           <!--Verificar si hay productos-->
@@ -166,252 +168,252 @@
             <!-- Paginador -->
             {{$clientesB}}
             @endif
-            <!-- Modal agregar cliente-->
-            <div class="modal fade" id="InsertCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Insertar cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Formulario -->
-                    <form method="POST" class="form-submit-limit" action="{{route('cliente.store')}}" enctype="multipart/form-data">
-                      @csrf
-                      <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
-                      <div class="form-group">
-                        <label>N° documento</label>
-                        <input type="text" name="id_documento" class="form-control" id="" placeholder="">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlSelect1">Tipo de documento</label>
-                        <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
-                          <option value="">Seleccionar tipo...</option>
-                          @foreach($tipos as $t)
-                          <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Nombres</label>
-                        <input type="text" name="nombres" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Apellidos</label>
-                        <input type="text" name="apellidos" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Correo</label>
-                        <input type="text" name="correo" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Celular</label>
-                        <input type="number" name="celular" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Fecha nacimiento</label>
-                        <input type="date" name="fecha_nacimiento" class="form-control">
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="guardar_cliente" class="btn btn-primary button-submit-limit gcliente">Guardar</button>
-                      </div>
 
-
-                    </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Modal editar cliente-->
-            <div class="modal fade" id="EditCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Formulario -->
-                    <form method="POST" class="form-submit-limit" id="clientedit" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
-                      @csrf
-                      @method('PUT')
-                      <input type="hidden" id="id_documento" name="id_documento">
-                      <div class="form-group">
-                        <label>N° documento</label>
-                        <input type="text" name="id_documento" class="form-control" id="documento">
-                      </div>
-                      <div class="form-group">
-                        <label>Tipo de documento</label>
-                        <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
-                          <option value="">No tiene tipo de documento registrado</option>
-                          @foreach($tipos as $t)
-                          <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombres" class="form-control" id="nombre">
-                      </div>
-                      <div class="form-group">
-                        <label>Apellidos</label>
-                        <input type="text" name="apellidos" class="form-control" id="apellido">
-                      </div>
-                      <div class="form-group">
-                        <label>Correo</label>
-                        <input type="text" name="correo" class="form-control" id="correo">
-                      </div>
-                      <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" id="direccion">
-                      </div>
-                      <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control" id="telefono">
-                      </div>
-                      <div class="form-group">
-                        <label>Celular</label>
-                        <input type="number" name="celular" class="form-control" id="celular">
-                      </div>
-                      <div class="form-group">
-                        <label>Fecha nacimiento</label>
-                        <input type="date" name="fecha_nacimiento" class="form-control" id="fecha">
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary button-submit-limit editcliente">Actualizar</button>
-                      </div>
-
-
-                    </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Modal ver cliente-->
-            <div class="modal fade" id="VerCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ver cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Formulario -->
-                    <form method="GET" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
-                      @csrf
-                      <input type="hidden" id="id_documento" name="id_documento">
-                      <div class="form-group">
-                        <label>N° documento</label>
-                        <input type="text" name="documento" class="form-control" id="documento" placeholder="" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlSelect1">Tipo de documento</label>
-                        <select class="selectpicker form-control" name="tipo_documento" id="id_tipo_documento" disabled>
-                          <option value="">No tiene tipo de documento registrado</option>
-                          @foreach($tipos as $t)
-                          <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" placeholder="" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Apellidos</label>
-                        <input type="text" name="apellido" class="form-control" id="apellido" placeholder="" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Correo</label>
-                        <input type="text" name="correo" class="form-control" id="correo" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" id="direccion" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Telefono</label>
-                        <input type="number" name="telefono" class="form-control" id="telefono" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Celular</label>
-                        <input type="number" name="celular" class="form-control" id="celular" disabled>
-                      </div>
-                      <div class="form-group">
-                        <label>Fecha nacimiento</label>
-                        <input type="date" name="fecha" class="form-control" id="fecha" disabled>
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary " data-dismiss="modal">Regresar</button>
-
-                      </div>
-
-
-                    </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Modal eliminar cliente-->
-            <div class="modal fade" id="EliminarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header header-primary">
-                    <h5 class="modal-title" id="exampleModalLabel">Eliminar cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Formulario -->
-                    <form class="form-submit-limit" action="{{route('cliente.destroy','id_documento')}}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <input type="hidden" id="id_documento" name="id_documento">
-                      <p class="text-center">¿Estas seguro de eliminar el registro?</p>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary button-submit-limit">Eliminar</button>
-
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>
       </div>
     </div>
+    <!-- Modal agregar cliente-->
+    <div class="modal fade" id="InsertCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Insertar cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario -->
+            <form method="POST" class="form-submit-limit" action="{{route('cliente.store')}}" enctype="multipart/form-data">
+              @csrf
+              <input type="hidden" name="id_user" value="{{Auth::user()->id}}" class="form-control">
+              <div class="form-group">
+                <label>N° documento</label>
+                <input type="text" name="id_documento" class="form-control" id="" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Tipo de documento</label>
+                <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
+                  <option value="">Seleccionar tipo...</option>
+                  @foreach($tipos as $t)
+                  <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nombres</label>
+                <input type="text" name="nombres" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" name="apellidos" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Correo</label>
+                <input type="text" name="correo" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Direccion</label>
+                <input type="text" name="direccion" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="number" name="telefono" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Celular</label>
+                <input type="number" name="celular" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Fecha nacimiento</label>
+                <input type="date" name="fecha_nacimiento" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="guardar_cliente" class="btn btn-primary button-submit-limit gcliente">Guardar</button>
+              </div>
 
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal editar cliente-->
+    <div class="modal fade" id="EditCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario -->
+            <form method="POST" class="form-submit-limit" id="clientedit" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <input type="hidden" id="id_documento" name="id_documento">
+              <div class="form-group">
+                <label>N° documento</label>
+                <input type="text" name="id_documento" class="form-control" id="documento">
+              </div>
+              <div class="form-group">
+                <label>Tipo de documento</label>
+                <select class="form-control" name="id_tipo_documento" id="id_tipo_documento">
+                  <option value="">No tiene tipo de documento registrado</option>
+                  @foreach($tipos as $t)
+                  <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombres" class="form-control" id="nombre">
+              </div>
+              <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" name="apellidos" class="form-control" id="apellido">
+              </div>
+              <div class="form-group">
+                <label>Correo</label>
+                <input type="text" name="correo" class="form-control" id="correo">
+              </div>
+              <div class="form-group">
+                <label>Direccion</label>
+                <input type="text" name="direccion" class="form-control" id="direccion">
+              </div>
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="number" name="telefono" class="form-control" id="telefono">
+              </div>
+              <div class="form-group">
+                <label>Celular</label>
+                <input type="number" name="celular" class="form-control" id="celular">
+              </div>
+              <div class="form-group">
+                <label>Fecha nacimiento</label>
+                <input type="date" name="fecha_nacimiento" class="form-control" id="fecha">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary button-submit-limit editcliente">Actualizar</button>
+              </div>
+
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal ver cliente-->
+    <div class="modal fade" id="VerCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ver cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario -->
+            <form method="GET" action="{{route('cliente.update','id_documento')}}" enctype="multipart/form-data">
+              @csrf
+              <input type="hidden" id="id_documento" name="id_documento">
+              <div class="form-group">
+                <label>N° documento</label>
+                <input type="text" name="documento" class="form-control" id="documento" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Tipo de documento</label>
+                <select class="selectpicker form-control" name="tipo_documento" id="id_tipo_documento" disabled>
+                  <option value="">No tiene tipo de documento registrado</option>
+                  @foreach($tipos as $t)
+                  <option value="{{$t->id_tipo_documento}}">{{$t->nom_tipo_documento}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label>Correo</label>
+                <input type="text" name="correo" class="form-control" id="correo" disabled>
+              </div>
+              <div class="form-group">
+                <label>Direccion</label>
+                <input type="text" name="direccion" class="form-control" id="direccion" disabled>
+              </div>
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="number" name="telefono" class="form-control" id="telefono" disabled>
+              </div>
+              <div class="form-group">
+                <label>Celular</label>
+                <input type="number" name="celular" class="form-control" id="celular" disabled>
+              </div>
+              <div class="form-group">
+                <label>Fecha nacimiento</label>
+                <input type="date" name="fecha" class="form-control" id="fecha" disabled>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary " data-dismiss="modal">Regresar</button>
+
+              </div>
+
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal eliminar cliente-->
+    <div class="modal fade" id="EliminarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header header-primary">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario -->
+            <form class="form-submit-limit" action="{{route('cliente.destroy','id_documento')}}" method="POST">
+              @csrf
+              @method('DELETE')
+              <input type="hidden" id="id_documento" name="id_documento">
+              <p class="text-center">¿Estas seguro de eliminar el registro?</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary button-submit-limit">Eliminar</button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <script>
       $(".gcliente").click(function(e) {
         let id_documento = $("input[name=id_documento]").val();
@@ -475,7 +477,7 @@
 
       $(".editcliente").click(function(e) {
         e.preventDefault();
-        
+
         let id_documento = $("#documento").val();
         let nombres = $("#nombre").val();
         let apellidos = $("#apellido").val();
@@ -487,13 +489,13 @@
         let fecha_nacimiento = $("#fecha").val();
         let _token = $('meta[name="csrf-token"]').attr('content');
         var dataString = $('#clientedit').serialize();
-       
+
         $.ajax({
           url: "{{route('cliente.update','id_documento')}}",
           type: 'POST',
-          data:dataString ,
+          data: dataString,
           success: function(data) {
-          
+
             if (data.error) {
               var values = '';
 

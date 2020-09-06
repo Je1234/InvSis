@@ -9,6 +9,9 @@ $('#EliminarCat').on('show.bs.modal',function(event){
     modal.find('.modal-body #id_categoria').val(id_categoria);
 
 });
+
+
+
 //EDITAR CATEGORIA
 $('#EditCat').on('show.bs.modal',function(event){
 

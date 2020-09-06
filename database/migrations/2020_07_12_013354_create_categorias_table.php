@@ -18,6 +18,7 @@ class CreateCategoriasTable extends Migration
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->string('nom_categoria');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

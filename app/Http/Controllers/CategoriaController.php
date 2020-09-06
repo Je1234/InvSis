@@ -18,10 +18,29 @@ class CategoriaController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function index()
     {
         $categoria = categorias::where('id_user',Auth::user()->id)->paginate(5);
         return view('categorias.CategoriaIndex' ,compact('categoria'));
+    }
+
+    public function indexRecoveryCategoria()
+    {
+        $categoria = categorias::where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5);
+        return view('categorias.CategoriaReIndex' ,compact('categoria'));
+    }
+
+    public function RecoveryCategoria(request $request)
+    {
+        categorias::withTrashed()->find($request->id_categoria)->restore();
+        return redirect()->route('IndexRcategoria')->with('datos','Registro recuperado correctamente');
+    }
+
+    public function RecoveryAllCategoria(request $request)
+    {
+        categorias::where('id_user',Auth::user()->id)->onlyTrashed()->restore();
+        return redirect()->route('categoria.index')->with('datos','Todos los registros recuperados correctamente');
     }
 
     /**

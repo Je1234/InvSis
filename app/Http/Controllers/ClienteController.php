@@ -28,6 +28,30 @@ class ClienteController extends Controller
         return view ('clientes.ClienteIndex',compact('clientes','tipos','tipoB','busqueda','clientesB'));
     }
 
+    public function indexRecoveryCliente(Request $request)
+    {
+        $tipoB=$request->get('tipo');
+        $busqueda=$request->get('buscarPor');
+        $variablesurl = $request->only(['tipo','buscarPor']);
+        $clientes= clientes::where('id_user',Auth::user()->id)->paginate(5);
+ 
+        $clientesB = clientes::buscarrecovery($tipoB, $busqueda)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(10)->appends($variablesurl);
+
+        return view ('clientes.ClienteReIndex',compact('clientes','tipoB','busqueda','clientesB'));
+    }
+
+    public function RecoveryCliente(request $request)
+    {
+        clientes::withTrashed()->find($request->id_documento)->restore();
+        return redirect()->route('IndexRcliente')->with('datos','Registro recuperado correctamente');
+    }
+
+    public function RecoveryAllCliente(request $request)
+    {
+        clientes::where('id_user',Auth::user()->id)->onlyTrashed()->restore();
+        return redirect()->route('cliente.index')->with('datos','Todos los registros recuperados correctamente');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

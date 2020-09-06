@@ -36,6 +36,33 @@ class ProveedorController extends Controller
         
     }
 
+    public function indexRecoveryProveedor(Request $request)
+    {
+        $nombre=$request->get('buscarNom');
+        $variableurl = $request->only(['buscarNom']);
+        $products = DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
+        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
+
+        $proveedorB= proveedores::buscarrecoveryp($nombre)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5,['*'], 'prov')->appends($variableurl);
+        $proveedor= proveedores::where('id_user',Auth::user()->id)->paginate(5); 
+        return view('proveedores.ProveedorReIndex',compact('proveedor','proveedorB','nombre','products','categoria','ubicacion'));
+
+        
+    }
+
+    public function RecoveryProveedor(request $request)
+    {
+        proveedores::withTrashed()->find($request->id_proveedor)->restore();
+        return redirect()->route('IndexRproveedor')->with('datos','Registro recuperado correctamente');
+    }
+
+    public function RecoveryAllProveedor(request $request)
+    {
+        proveedores::where('id_user',Auth::user()->id)->onlyTrashed()->restore();
+        return redirect()->route('proveedor.index')->with('datos','Todos los registros recuperados correctamente');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
