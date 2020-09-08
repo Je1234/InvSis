@@ -1,3 +1,17 @@
+//RECUPERAR PRODUCTO
+$('#RecuperarProduct').on('show.bs.modal',function(event){
+
+    var button = $(event.relatedTarget)
+    var id_producto = button.data('id_producto')
+
+    var modal = $(this)
+
+    modal.find('.modal-body #id_producto').val(id_producto);
+    
+});
+
+
+
 //ELIMINAR PRODUCTO
 $('#EliminarProduct').on('show.bs.modal',function(event){
 

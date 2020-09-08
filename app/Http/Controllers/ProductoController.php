@@ -30,15 +30,41 @@ class ProductoController extends Controller
             
         $producto = productos::where('id_user',Auth::user()->id)->paginate(5);
 
-        $results = productos::with('categorias')->get();
         $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
         $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
         $proveedor = DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
              
        
-        return view('productos.ProductoIndex', compact('producto', 'results','categoria','ubicacion','tipo','busqueda','productoB','proveedor'));
+        return view('productos.ProductoIndex', compact('producto','categoria','ubicacion','tipo','busqueda','productoB','proveedor'));
 
         
+    }
+
+    public function indexRecoveryProducto(Request $request)
+    {
+        $busqueda = $request->get('buscarPor');
+        $tipo = $request->get('tipo');
+        $variablesurl = $request->only(['tipo','buscarPor']);
+        $productoB = productos::buscarreproducto($tipo, $busqueda)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(10)->appends($variablesurl);  
+        $producto = productos::where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5);
+
+             
+       
+        return view('productos.ProductoReIndex', compact('producto','tipo','busqueda','productoB'));
+
+        
+    }
+
+    public function RecoveryProducto(request $request)
+    {
+        productos::withTrashed()->find($request->id_producto)->restore();
+        return redirect()->route('IndexRproducto')->with('datos','Registro recuperado correctamente');
+    }
+
+    public function RecoveryAllProducto(request $request)
+    {
+        productos::where('id_user',Auth::user()->id)->onlyTrashed()->restore();
+        return redirect()->route('producto.index')->with('datos','Todos los registros recuperados correctamente');
     }
 
     /**

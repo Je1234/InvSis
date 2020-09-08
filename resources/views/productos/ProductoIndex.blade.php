@@ -22,8 +22,13 @@
         <div class="card-header card-header-primary">
           <h4 class="card-title">Lista de productos</h4>
           <div class="form-check form-check-inline float-right">
+            <div class="btn-toolbar" role="group" aria-label="Basic example">
+              <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertProduct"><i class="material-icons">add</i>Agregar </button>
+        
+              <a type="button" href="{{route('IndexRproducto')}}" class="btn btn-black"><i class="material-icons">restore_from_trash</i>Recuperar borrados</a>
+              
+            </div>
 
-            <button type="" class="btn btn-black" data-toggle="modal" data-target="#InsertProduct"><i class="material-icons">add</i>Agregar </button>
 
           </div>
 
@@ -65,7 +70,7 @@
                 <option value="">Filtrar por</option>
                 <option>Nombre</option>
                 <option>Marca</option>
-                <option value="id_categoria">Categoria</option>
+                <!--<option value="id_categoria">Categoria</option>-->
                 <option value="precio_venta">Precio de venta</option>
                 <option value="precio_compra">Precio de compra</option>
                 <option>Stock</option>
@@ -302,7 +307,7 @@
                       </div>
                       <div class="form-group">
                         <label>Precio venta</label>
-                        <input type="number" name="precio_venta" id="precio_venta" class="form-control" >
+                        <input type="number" name="precio_venta" id="precio_venta" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Precio compra</label>
@@ -421,7 +426,7 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label >Ubicacion bodega</label>
+                        <label>Ubicacion bodega</label>
                         <select class="selectpicker form-control" id="id_ubicacion" name="id_ubicacion" disabled>
                           <option value="">No tiene bodega registrada</option>
                           @foreach($ubicacion as $u)
@@ -522,7 +527,7 @@
         console.log(id_proveedor);
         console.log(id_categoria);
         console.log(gp.ruta_imagen);
-        
+
         $.ajax({
           url: "{{route('producto.store')}}",
           type: "POST",
@@ -548,6 +553,7 @@
               })
             } else if (!data.error) {
               $('select').selectpicker('refresh');
+              $('#InsertProduct').modal('hide');
               setTimeout(function() {
                 location.reload();
               }, 1000);
@@ -592,12 +598,12 @@
         gp.append('descripcion', descripcion);
         gp.append('_token', _token);
         gp.append('_method', 'PUT');
-        
+
         $.ajax({
           url: "{{route('producto.update','id_producto')}}",
           type: "POST",
           data: gp,
-          
+
           processData: false,
           contentType: false,
           success: function(data) {
@@ -618,6 +624,7 @@
                 type: "error"
               })
             } else if (!data.error) {
+              $('#EditProduct').modal('hide');
               setTimeout(function() {
                 location.reload();
               }, 1000);

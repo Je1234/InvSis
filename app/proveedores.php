@@ -28,7 +28,7 @@ class proveedores extends Model
     public function scopeBuscarRecoveryP($query, $nombre){
 
         if(($nombre)){
-            return $query->where('nombre','like',"%$nombre%")->where('id_user',Auth::user()->id); 
+            return $query->where('nombre','like',"%$nombre%")->onlyTrashed()->where('id_user',Auth::user()->id); 
         }
 
     }

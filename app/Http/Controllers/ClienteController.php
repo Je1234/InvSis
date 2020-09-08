@@ -33,7 +33,7 @@ class ClienteController extends Controller
         $tipoB=$request->get('tipo');
         $busqueda=$request->get('buscarPor');
         $variablesurl = $request->only(['tipo','buscarPor']);
-        $clientes= clientes::where('id_user',Auth::user()->id)->paginate(5);
+        $clientes= clientes::where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5);
  
         $clientesB = clientes::buscarrecovery($tipoB, $busqueda)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(10)->appends($variablesurl);
 

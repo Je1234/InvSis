@@ -23,7 +23,7 @@ class clientes extends Model
     public function scopeBuscarRecovery($query, $tipoB,$busqueda){
 
         if(($tipoB) && ($busqueda)){
-            return $query->where($tipoB,'like',"%$busqueda%")->where('id_user',Auth::user()->id); 
+            return $query->where($tipoB,'like',"%$busqueda%")->onlyTrashed()->where('id_user',Auth::user()->id); 
         }
 
     }

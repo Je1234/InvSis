@@ -255,6 +255,7 @@
                                 type: "error"
                             })
                         } else if (!data.error) {
+                            $('#InsertCat').modal('hide');
                             setTimeout(function() {
                                 location.reload();
                             }, 1000);
@@ -301,6 +302,7 @@
                             });
                         } else if (!data.error) {
                             $('select').selectpicker('refresh');
+                            $('#EditCat').modal('hide');
                             setTimeout(function() {
                                 location.reload();
                             }, 1000);

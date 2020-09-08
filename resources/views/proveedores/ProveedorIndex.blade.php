@@ -449,6 +449,7 @@
                         type: "error"
                     })
                 } else if (!data.error) {
+                    $('#InsertProv').modal('hide');
                     setTimeout(function() {
                         location.reload();
                     }, 1000);
@@ -500,6 +501,7 @@
                         type: "error"
                     });
                 } else if (!data.error) {
+                    $('#EditProv').modal('hide');
                     setTimeout(function() {
                         location.reload();
                     }, 1000);

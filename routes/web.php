@@ -109,6 +109,14 @@ Route::get('/RecuperarProveedor','ProveedorController@RecoveryProveedor')->name(
 //Recuperar todas los proveedores
 Route::get('/RecuperarTodoProveedor','ProveedorController@RecoveryAllProveedor')->name('RAproveedor');
 
+//Index Recuperar productos
+Route::get('/Recuperar productos','ProductoController@indexRecoveryProducto')->name('IndexRproducto');
+
+//Recuperar productos
+Route::get('/RecuperarProducto','ProductoController@RecoveryProducto')->name('Rproducto');
+
+//Recuperar todas los productos
+Route::get('/RecuperarTodoProducto','ProductoController@RecoveryAllProducto')->name('RAproducto');
 
 
 Auth::routes();

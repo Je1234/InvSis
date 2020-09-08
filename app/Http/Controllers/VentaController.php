@@ -33,6 +33,7 @@ class VentaController extends Controller
         return view('ventas.VentaIndex',compact('products','clientes','metodos','tipos','ventas'));
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -115,7 +116,28 @@ class VentaController extends Controller
         $ptotal = $request->input('precio_total');
         $quantities = $request->input('cantidad', []);
         $total_p_producto=$request->input('total',[]);
-        
+
+
+        //Restar stock al hacer una venta
+        $stockA=0;
+
+        for ($i = 0; $i < count($products); $i++) {
+            $stockA = DB::table('productos')
+            ->select('stock')
+            ->where('id_producto',  $products[$i])
+            ->first();
+            if ($stockA->stock - $quantities[$i] <= 0) {
+                DB::table('productos')
+                ->where('id_producto', $products[$i])
+                ->update(array('stock' =>  0 ));
+            } else {
+
+                DB::table('productos')
+                ->where('id_producto', $products[$i])
+                ->update(array('stock' => $stockA->stock - $quantities[$i]));
+            }
+        }
+           
         
         for ($product=0; $product < count($products); $product++) {
         if ($products[$product] != '') {
@@ -125,12 +147,12 @@ class VentaController extends Controller
               ]);
 
         }
-
+        return redirect()->route('venta.index')->with('datos','Venta realizada correctamente');
+        }
     }
    
-    return redirect()->route('venta.index')->with('datos','Venta realizada correctamente');
-        
-    }
+    
+   
 
     /**
      * Display the specified resource.

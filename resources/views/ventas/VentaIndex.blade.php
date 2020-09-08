@@ -168,11 +168,20 @@
                                         <td>
                                             <select name="products[]" data-live-search="true" data-container="body" form="form_venta" class="form-control  selectpicker product">
                                                 <option value="">-- Elegir producto --</option>
+
                                                 @foreach ($products as $product)
+
+                                                @if($product->stock === 0)
+
+                                                <option value="" disabled>
+                                                    {{ $product->nombre }} (No hay stock)
+                                                </option>
+
+                                                @else
                                                 <option value="{{ $product->id_producto }}" precio_venta="{{$product->precio_venta}}">
                                                     {{ $product->nombre }} (${{ number_format($product->precio_venta, 2) }})
                                                 </option>
-
+                                                @endif
                                                 @endforeach
                                             </select>
                                         </td>
@@ -244,10 +253,14 @@
 
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </form>
 </div>
-</div>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -777,7 +790,7 @@
                     limpiar();
                     $('#aaa').empty().append(data.html);
                     $('select').selectpicker('refresh');
-                     //ALERTAR SUAVE REGISTRO CORRECTO 
+                    //ALERTAR SUAVE REGISTRO CORRECTO 
                     Swal.fire({
 
                         type: 'success',
@@ -786,12 +799,12 @@
                         timer: 1500,
 
                     })
-                    
-                    
-                    $('#InsertCliente').modal('hide');     
+
+
+                    $('#InsertCliente').modal('hide');
                 }
 
-                
+
                 /*limpiar();
 
                 $('#aaa').empty().append(data);
@@ -807,7 +820,7 @@
                     timer: 1500,
 
                 })*/
-                
+
             },
             error: function(data) {
                 //ALERTAR SUAVE ERROR

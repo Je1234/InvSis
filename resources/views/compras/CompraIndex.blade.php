@@ -159,19 +159,19 @@
                                                 </span>
                                                 <input type="number" name="precio[]" id="precioP" class="form-control  precio" readonly />
                                             </div>
-                                            
+
                                         </td>
                                         <td>
                                             <input type="number" name="cantidad[]" class="form-control cantidad" value="0" min="0" />
                                         </td>
                                         <td>
-                                        <div class="input-group-prepend">
+                                            <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     <i class="material-icons">attach_money</i>
                                                 </span>
                                                 <input type="number" name="total[]" class="form-control total" readonly />
                                             </div>
-                                            
+
                                         </td>
                                     </tr>
                                     <tr id="product1"></tr>
@@ -226,7 +226,8 @@
 
                     </div>
                 </div>
-
+            </div>
+        </div>
     </form>
     <div class="row">
         <div class="col-md-12">
@@ -647,10 +648,10 @@
                         <label>Precio compra</label>
                         <input type="number" name="precio_compra" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label>Cantidad en stock</label>
                         <input type="number" name="stock" class="form-control">
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label>Marca</label>
                         <input type="texts" name="marca" class="form-control">
@@ -819,7 +820,7 @@
                     limpiar();
                     $('#provlist').empty().append(data.html);
                     $('select').selectpicker('refresh');
-                     //ALERTAR SUAVE REGISTRO CORRECTO 
+                    //ALERTAR SUAVE REGISTRO CORRECTO 
                     Swal.fire({
 
                         type: 'success',
@@ -828,9 +829,9 @@
                         timer: 1500,
 
                     })
-                    
-                   
-                    $('#InsertProv').modal('hide'); 
+
+
+                    $('#InsertProv').modal('hide');
                 }
 
 
@@ -910,7 +911,7 @@
                     limpiar();
                     $('#product').empty().append(data.html);
                     $('select').selectpicker('refresh');
-                     //ALERTAR SUAVE REGISTRO CORRECTO 
+                    //ALERTAR SUAVE REGISTRO CORRECTO 
                     Swal.fire({
 
                         type: 'success',
@@ -919,9 +920,9 @@
                         timer: 1500,
 
                     })
-                    
-                   
-                    $('#InsertProduct').modal('hide'); 
+
+
+                    $('#InsertProduct').modal('hide');
                 }
 
                 /*limpiar();

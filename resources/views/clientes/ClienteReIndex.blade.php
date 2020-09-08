@@ -51,7 +51,7 @@
             <h2>No se encontraron resultados</h2>
             <div class="form-check form-check-inline float-right col-md-1">
 
-              <a type="button" href="{{route('clientes')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar </a>
+              <a type="button" href="{{route('IndexRcliente')}}" class="btn btn-primary"><i class="material-icons">reply</i>Regresar </a>
 
             </div>
           </div>

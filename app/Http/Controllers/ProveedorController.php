@@ -45,7 +45,7 @@ class ProveedorController extends Controller
         $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
 
         $proveedorB= proveedores::buscarrecoveryp($nombre)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5,['*'], 'prov')->appends($variableurl);
-        $proveedor= proveedores::where('id_user',Auth::user()->id)->paginate(5); 
+        $proveedor= proveedores::where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5); 
         return view('proveedores.ProveedorReIndex',compact('proveedor','proveedorB','nombre','products','categoria','ubicacion'));
 
         

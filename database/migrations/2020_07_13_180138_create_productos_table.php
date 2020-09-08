@@ -31,7 +31,7 @@ class CreateProductosTable extends Migration
             $table->float('precio_compra',15,2)->nullable();
             $table->integer('stock')->length(20)->nullable();
             $table->text('descripcion')->nullable();
-           
+            $table->softDeletes();
             
 
             $table->timestamps();

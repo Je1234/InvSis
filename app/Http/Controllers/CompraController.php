@@ -55,7 +55,20 @@ class CompraController extends Controller
         $products = $request->get('products',[]);
         $quantities = $request->input('cantidad', []);
         $total_p_producto=$request->input('total',[]);
-        
+        //Aumentar el stock al realizar una compra
+        $stockA=0;
+        for ($i=0; $i<count($products); $i++) {
+            $stockA = DB::table('productos')
+            ->select('stock')
+            ->where('id_producto',  $products[$i])
+            ->first();
+           
+           DB::table('productos')
+            ->where('id_producto', $products[$i])
+            ->update(array('stock' => $stockA->stock + $quantities[$i]));
+            
+            
+        }
 
         for ($product=0; $product < count($products); $product++) {
         if ($products[$product] != '') {

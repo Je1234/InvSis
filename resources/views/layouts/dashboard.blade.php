@@ -230,7 +230,9 @@ The above copyright notice and this permission notice shall be included in all c
       <a href="#" data-toggle="dropdown">
         <i class="fa fa-cog fa-2x"> </i>
       </a>
+     
       <ul class="dropdown-menu">
+      @role('admin')
         <li class="header-title"> Sidebar Filters</li>
         <li class="adjustments-line">
           <a href="javascript:void(0)" class="switch-trigger active-color card-header-primary">
@@ -245,6 +247,7 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="clearfix"></div>
           </a>
         </li>
+        @endrole
         <li class="header-title"> Modo oscuro o claro</li>
         <li class="adjustments-line">
           <a href="javascript:void(0)" class="switch-trigger background-color">

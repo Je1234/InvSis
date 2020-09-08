@@ -462,9 +462,11 @@
                 type: "error"
               })
             } else if (!data.error) {
+              $('#InsertCliente').modal('hide'); 
               setTimeout(function() {
                 location.reload();
               }, 1000);
+
             }
           },
           error: function(data) {
@@ -511,7 +513,9 @@
                 type: "error"
               });
             } else if (!data.error) {
+              
               $('select').selectpicker('refresh');
+              $('#EditCliente').modal('hide');
               setTimeout(function() {
                 location.reload();
               }, 1000);
