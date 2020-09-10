@@ -118,6 +118,12 @@ Route::get('/RecuperarProducto','ProductoController@RecoveryProducto')->name('Rp
 //Recuperar todas los productos
 Route::get('/RecuperarTodoProducto','ProductoController@RecoveryAllProducto')->name('RAproducto');
 
+//Index Renovar usuarios expirados
+Route::get('/Recuperar usuarios','RolesYUsersController@indexRecoveryUsuarios')->name('IndexRusuarios');
+
+//Renovar usuarios
+Route::put('/RenovarUsuario','RolesYUsersController@RenovarUsuarios')->name('Rusuario');
+
 
 Auth::routes();
 

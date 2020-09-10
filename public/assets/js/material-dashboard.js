@@ -23,6 +23,7 @@ $('.form-submit-limit').on('submit',function (){
 
 
 
+
 (function() {
   isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 

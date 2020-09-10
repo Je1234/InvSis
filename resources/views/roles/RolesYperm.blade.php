@@ -10,8 +10,8 @@
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Lista de usuarios</h4>
                 <div class="form-check form-check-inline float-right">
+                    <a type="button" class="btn btn-black" href="{{route('IndexRusuarios')}}"><i class="material-icons">restore</i>Usuarios expirados </a>
 
-                   
 
                 </div>
 
@@ -42,6 +42,12 @@
                                 Correo
                             </th>
                             <th>
+                                Plan actual
+                            </th>
+                            <th>
+                                Fecha fin de plan
+                            </th>
+                            <th>
                                 Roles
                             </th>
 
@@ -64,6 +70,18 @@
                                     {{$u->email}}
                                 </td>
                                 <td>
+                                    {{$u->tipo_plan}}
+                                </td>
+                                <td>
+                                    @if($u->tipo_plan === 'basico')
+                                    {{$u->fecha_inicio->addDays(90)->toDateString()}}
+                                    @elseif($u->tipo_plan === 'medio')
+                                    {{$u->fecha_inicio->addDays(182)->toDateString()}}
+                                    @elseif($u->tipo_plan === 'completo')
+                                    {{$u->fecha_inicio->addDays(364)->toDateString()}}
+                                    @endif
+                                </td>
+                                <td>
                                     @foreach($u->roles as $us )
                                     {{ $us->name}}
                                     @endforeach
@@ -76,7 +94,7 @@
                                     </button>
                                     @can('editar-user')
                                     <!-- Editar -->
-                                    <button data-toggle="modal" data-target="#EditCliente" rel="tooltip" class="btn btn-jei">
+                                    <button data-toggle="modal" data-target="#EditUser" data-id="{{$u->id}}" data-name="{{$u->name}}" data-email="{{$u->email}}" data-tipo_plan="{{$u->tipo_plan}}" rel="tooltip" class="btn btn-jei">
                                         <i class="material-icons">edit</i>
                                     </button>
                                     @endcan
@@ -112,9 +130,9 @@
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Lista de roles</h4>
                 <div class="form-check form-check-inline float-right">
-                      @can('crear-rol')
+                    @can('crear-rol')
                     <button type="" class="btn btn-black" data-toggle="modal" data-target="#CrearRol"><i class="material-icons">add</i>Agregar </button>
-                       @endrole
+                    @endrole
                 </div>
 
             </div>
@@ -141,7 +159,7 @@
                                 Nombre
                             </th>
                             <th>
-                               Permisos
+                                Permisos
                             </th>
                             <th class="text-left">
                                 Actions
@@ -221,7 +239,7 @@
 
                     <div class="form-group">
                         <label>Permisos</label>
-                        
+
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
@@ -351,37 +369,44 @@
     </div>
 </div>
 
-<!-- Modal ver usuario-->
-<div class="modal fade" id="VerUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal editar usuario-->
+<div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ver usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form method="GET" action="{{route('roles.update','id')}}">
+                <form method="POST" action="{{route('roles.update','id')}}">
                     @csrf
+                    @method('PUT')
                     <input type="hidden" id="id" name="id">
                     <div class="form-group">
-                        <label>ID usuario</label>
-                        <input type="text" name="id" class="form-control" id="id" disabled>
-                    </div>
-                    <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" disabled>
+                        <input type="text" name="name" class="form-control" id="name">
                     </div>
                     <div class="form-group">
                         <label>Correo</label>
-                        <input type="text" name="apellido" class="form-control" id="apellido" disabled>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Plan nuevo</label>
+                        <select class="selectpicker form-control" id="tipo_plan" name="tipo_plan">
+                            <option value="">No tiene plan seleccionado</option>
+                            <option value="basico">Basico</option>
+                            <option value="medio">Medio</option>
+                            <option value="completo">Completo</option>
+
+                        </select>
                     </div>
 
-
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary " data-dismiss="modal">Regresar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
 
                     </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,33 @@ class RolesYUsersController extends Controller
         $roles=Role::with('permissions')->paginate(5);
 
         return view('roles.RolesYperm',compact('users','roles'));
+    }
+
+    public function indexRecoveryUsuarios()
+    {
+        $users=User::with('roles')->onlyTrashed()->paginate(5);
+
+
+        return view('roles.RolesYpermRe',compact('users'));
+    }
+
+
+    public function RenovarUsuarios(Request $request)
+    {
+        User::withTrashed()->find($request->id)->restore();
+
+        $newFecha=Carbon::now('GMT-5');
+
+        $UserRenovado= array(
+            "fecha_inicio"=>$newFecha,
+            "tipo_plan"=>$request->tipo_plan
+        );
+
+        $user= User::withTrashed()->find($request->id);
+
+        $user->update($UserRenovado);
+   
+        return redirect()->route('IndexRusuarios')->with('datos','Usuario renovado correctamente');
     }
 
     /**
@@ -76,9 +104,32 @@ class RolesYUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $newFecha =  Carbon::now('GMT-5');
+        $tipo_plan= $request->tipo_plan;
+        
+        if ( $tipo_plan == '') {
+            $datos = array(
+                "name" => $request->name,
+                "email" => $request->email,
+               
+            );
+        } else {
+            $datos = array(
+                "name" => $request->name,
+                "email" => $request->email,
+                "fecha_inicio" =>$newFecha,
+                "tipo_plan" => $request->tipo_plan
+            );
+        }
+
+     
+            $user =User::findOrFail($request->id);
+            $user->update($datos);
+
+            return redirect()->route('roles.index')->with('datos','Registro actualizado correctamente'); 
+    
     }
 
     /**
@@ -98,7 +149,7 @@ class RolesYUsersController extends Controller
     public function destroyUser(request $id)
     {   $delete = $id->all();
         $eliminarR= User::findOrFail($id->id);
-        $eliminarR->delete();
+        $eliminarR->forceDelete();
 
         return redirect()->route('roles.index')->with('datos','Registro eliminado correctamente');
     }

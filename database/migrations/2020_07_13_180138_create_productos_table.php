@@ -29,7 +29,7 @@ class CreateProductosTable extends Migration
             $table->string('marca',60)->nullable();
             $table->float('precio_venta',15,2)->nullable();
             $table->float('precio_compra',15,2)->nullable();
-            $table->integer('stock')->length(20)->nullable();
+            $table->integer('stock')->length(20)->default(0);
             $table->text('descripcion')->nullable();
             $table->softDeletes();
             

@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -65,11 +66,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $newFecha = Carbon::now();
+      
         $roles = $data['roles'];
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'tipo_plan' => $data['tipo_plan'],
+            'fecha_inicio' => $newFecha
+           
         ]);
 
   

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Carbon\Carbon;
 class HomeController extends Controller
 {
     /**
@@ -16,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('role:admin|cliente');
     }
 
     /**
@@ -25,18 +26,21 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-       
-        $Mesactual = date('m');
-        $Añoactual = date('Y');
-        $ventas = DB::table('ventas')
-                    ->where('id_user',Auth::user()->id)
-                    ->whereRaw('YEAR(created_at)= ? and MONTH(created_at) = ?',[$Añoactual,$Mesactual])
-                    ->pluck('precio_total');
-    
-       
-        return view('ini',compact('ventas'));
-    }
+    {   
+            $Mesactual = date('m');
+            $Añoactual = date('Y');
+            $ventas = DB::table('ventas')
+                ->where('id_user', Auth::user()->id)
+                ->whereRaw('YEAR(created_at)= ? and MONTH(created_at) = ?', [$Añoactual, $Mesactual])
+                ->pluck('precio_total');
+
+
+            return view('ini', compact('ventas'));
+
+        }
+          
+        
+   
     public function ReUsuario()
     {
         
