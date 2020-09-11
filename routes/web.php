@@ -13,23 +13,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index')->name('ini')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('ini')->middleware('role:admin|cliente');
+
 //Redireccionamiento a vista index categorias
 Route::get('/Categorias', 'CategoriaController@index')->name('categorias');
-//Recursos para CRUD compras
+
+//Recursos para CRUD categorias
 Route::resource('categoria','CategoriaController');
-//Redireccionamiento a vista index categorias
+
+//Redireccionamiento a vista index ubicaciones
+Route::get('/Ubicaciones', 'UbicacionController@index')->name('ubicaciones');
+
+//Recursos para CRUD ubicacion
+Route::resource('ubicacion','UbicacionController');
+
+//Redireccionamiento a vista index compras
 Route::get('/Compras', 'CompraController@index')->name('compras');
+
 //Recursos para CRUD compras
 Route::resource('compra','CompraController');
 
-Route::get('/Compras', 'CompraController@index')->name('compras');
-//Recursos para CRUD roles
-Route::resource('compra','CompraController');
-
-//Redireccionamiento a vista index categorias
+//Redireccionamiento a vista index Roles y usuarios
 Route::get('/RolesADMIN', 'RolesYUsersController@index')->name('roles');
-//Recursos para CRUD productos
+//Recursos para CRUD roles y usuarios
 Route::resource('roles','RolesYUsersController');
 
 //Redireccionamiento a vista index productos
@@ -124,10 +130,18 @@ Route::get('/Recuperar usuarios','RolesYUsersController@indexRecoveryUsuarios')-
 //Renovar usuarios
 Route::put('/RenovarUsuario','RolesYUsersController@RenovarUsuarios')->name('Rusuario');
 
+//Index Recuperar ubicaciones
+Route::get('/Recuperar bodega','UbicacionController@indexRecoveryUbicaciones')->name('IndexRubicacion');
+
+//Recuperar productos
+Route::get('/RecuperarBodega','UbicacionController@RecoveryUbicacion')->name('Rubicacion');
+
+//Recuperar todas los productos
+Route::get('/RecuperarTodoBodega','UbicacionController@RecoveryAllUbicacion')->name('RAubicacion');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('role:admin|cliente');
 
 Route::get('/Permisos', 'HomeController@RolesYperm')->name('Permisos')->middleware('role:admin');
 

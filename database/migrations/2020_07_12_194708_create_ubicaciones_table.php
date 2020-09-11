@@ -17,9 +17,10 @@ class CreateUbicacionesTable extends Migration
             $table->bigInteger('id_ubicacion',true);
             $table->bigInteger('id_user')->nullable()->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
-            $table->string('nombre_bodega', 80);
-            $table->string('seccion', 80);
-            $table->string('direccion',80);
+            $table->string('nombre_bodega', 80)->nullable();
+            $table->string('seccion', 80)->nullable();
+            $table->string('direccion',80)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

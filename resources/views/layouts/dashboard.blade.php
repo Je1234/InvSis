@@ -105,7 +105,7 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{route('productos')}}">Lista de productos</a>
               <a class="dropdown-item" href="{{route('categorias')}}">Categorias</a>
-              <a class="dropdown-item" href="#">Ubicaciones</a>
+              <a class="dropdown-item" href="{{route('ubicaciones')}}">Ubicaciones</a>
 
           </li>
           @role('admin')
@@ -356,6 +356,8 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{{asset('assets/js/compras.js')}}" type="text/javascript"></script>
 
   <script src="{{asset('assets/js/roles.js')}}" type="text/javascript"></script>
+
+  <script src="{{asset('assets/js/ubicacion.js')}}" type="text/javascript"></script>
 
   <script>
     $(document).ready(function() {

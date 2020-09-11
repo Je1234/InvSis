@@ -9,7 +9,7 @@ $('#ExcelVenta').on('show.bs.modal',function(event){
   var id_venta = button.data('id_venta')
 
   var modal = $(this)
- console.log(id_venta);
+
   modal.find('.modal-body #id_venta').val(id_venta);
 
 
@@ -22,7 +22,7 @@ $('#PdfVenta').on('show.bs.modal',function(event){
   var id_venta = button.data('id_venta')
 
   var modal = $(this)
- console.log(id_venta);
+
   modal.find('.modal-body #id_venta').val(id_venta);
 
 
@@ -35,7 +35,7 @@ $('#EliminarVenta').on('show.bs.modal',function(event){
   var id_venta = button.data('id_venta')
 
   var modal = $(this)
- console.log(id_venta);
+ 
   modal.find('.modal-body #id_venta').val(id_venta);
 
 

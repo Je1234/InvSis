@@ -9,7 +9,7 @@ $('#EliminarCompra').on('show.bs.modal',function(event){
   var id_compra = button.data('id_compra')
 
   var modal = $(this)
- console.log(id_compra);
+
   modal.find('.modal-body #id_compra').val(id_compra);
 
 
@@ -92,7 +92,7 @@ $('#ExcelCompra').on('show.bs.modal',function(event){
   var id_compra = button.data('id_compra')
 
   var modal = $(this)
- console.log(id_compra);
+
   modal.find('.modal-body #id_compra').val(id_compra);
 
 
@@ -105,7 +105,7 @@ $('#PdfCompra').on('show.bs.modal',function(event){
   var id_compra = button.data('id_compra')
 
   var modal = $(this)
- console.log(id_compra);
+
   modal.find('.modal-body #id_compra').val(id_compra);
 
 

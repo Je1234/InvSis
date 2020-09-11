@@ -5,7 +5,7 @@ $('#RecuperarUsuario').on('show.bs.modal',function(event){
   var id = button.data('id')
 
   var modal = $(this)
- console.log(id);
+
   modal.find('.modal-body #id').val(id);
 
 });
@@ -21,7 +21,7 @@ $('#EditUser').on('show.bs.modal',function(event){
 
 
   var modal = $(this)
- console.log(id);
+
   modal.find('.modal-body #id').val(id);
   modal.find('.modal-body #name').val(name);
   modal.find('.modal-body #email').val(email);
@@ -38,7 +38,7 @@ $('#EliminarRol').on('show.bs.modal',function(event){
     var id = button.data('id')
   
     var modal = $(this)
-   console.log(id);
+ 
     modal.find('.modal-body #id').val(id);
   
   
@@ -50,7 +50,7 @@ $('#EliminarRol').on('show.bs.modal',function(event){
     var id = button.data('id')
   
     var modal = $(this)
-   console.log(id);
+
     modal.find('.modal-body #id').val(id);
   
   
