@@ -71,10 +71,8 @@ The above copyright notice and this permission notice shall be included in all c
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
-    -->
-      <div class="logo"><a href="#" class="simple-text logo-normal">
-          InvSis
-        </a></div>
+        -->
+      <div class="logo "><img src="{{asset('assets/img/logo_invsis3.png')}}" alt="" class="img-fluid col-md-10 ml-3"></div>
       <div class="sidebar-wrapper">
 
         <ul class="nav">
@@ -106,6 +104,7 @@ The above copyright notice and this permission notice shall be included in all c
               <a class="dropdown-item" href="{{route('productos')}}">Lista de productos</a>
               <a class="dropdown-item" href="{{route('categorias')}}">Categorias</a>
               <a class="dropdown-item" href="{{route('ubicaciones')}}">Ubicaciones</a>
+            </div>
 
           </li>
           @role('admin')
@@ -119,7 +118,7 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
           @endif
           @endrole
-          
+
           @role('admin')
 
           <li class="nav-item active">
@@ -145,8 +144,13 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
 
         </ul>
+
+
       </div>
+
     </div>
+
+
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -164,14 +168,7 @@ The above copyright notice and this permission notice shall be included in all c
           <div class="collapse navbar-collapse justify-content-end ">
 
             <ul class="navbar-nav ">
-              <li class="nav-item">
-                <a class="nav-link" href="javascript:;">
-                  <i class="material-icons">dashboard</i>
-                  <p class="d-lg-none d-md-block">
-                    Stats
-                  </p>
-                </a>
-              </li>
+
               <li class="nav-item dropdown">
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
@@ -197,7 +194,7 @@ The above copyright notice and this permission notice shall be included in all c
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown"><span class="nav-link">{{Auth::user()->name}}</span></a>
-                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="{{route('perfil')}}">Perfil</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -224,15 +221,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 
   </div>
-  </div>
+
   <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
       <a href="#" data-toggle="dropdown">
         <i class="fa fa-cog fa-2x"> </i>
       </a>
-     
+
       <ul class="dropdown-menu">
-      @role('admin')
+        @role('admin')
         <li class="header-title"> Sidebar Filters</li>
         <li class="adjustments-line">
           <a href="javascript:void(0)" class="switch-trigger active-color card-header-primary">
@@ -300,8 +297,32 @@ The above copyright notice and this permission notice shall be included in all c
         </li>
 
       </ul>
+
     </div>
+
   </div>
+  <footer class="footer">
+    <div class="container-fluid">
+      <nav class="float-left">
+        <ul>
+          <li>
+            <a href="#">
+              Adsi analitys
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="copyright float-right">
+        &copy;
+        <script>
+          document.write(new Date().getFullYear())
+        </script>, Hecho por
+        <a href="#" target="_blank">Adsi Analitys</a>.
+      </div>
+      <!-- your footer here -->
+
+    </div>
+  </footer>
   <!--   Core JS Files   -->
 
   <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
@@ -316,7 +337,6 @@ The above copyright notice and this permission notice shall be included in all c
   <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
   <script src="{{asset('assets/js/plugins/jquery.bootstrap-wizard.js')}}"></script>
   <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-
   <script src="{{asset('assets/js/plugins/bootstrap-selectpicker.js')}}"></script>
   <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
   <script src="{{asset('assets/js/plugins/bootstrap-datetimepicker.min.js')}}"></script>
@@ -577,6 +597,7 @@ The above copyright notice and this permission notice shall be included in all c
 
     });
   </script>
+
 </body>
 
 </html>

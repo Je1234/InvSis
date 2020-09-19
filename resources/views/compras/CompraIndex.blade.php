@@ -140,7 +140,7 @@
                                 <thead>
                                     <tr>
                                         <th>Producto</th>
-                                        <th>Precio</th>
+                                        <th>Precio de compra</th>
                                         <th>Cantidad</th>
                                         <th>Total</th>
                                     </tr>

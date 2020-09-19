@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('role:admin|cliente');
+        $this->middleware('auth');
     }
 
     /**
@@ -26,7 +26,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {  
+    
+
             $Mesactual = date('m');
             $Añoactual = date('Y');
             $ventas = DB::table('ventas')
@@ -37,7 +39,16 @@ class HomeController extends Controller
 
             return view('ini', compact('ventas'));
 
-        }
+    }
+
+    public function indexPerfil(){
+
+        $user = auth()->user();
+
+       
+
+        return view('perfil.PerfilIndex' ,compact('user'));
+    }
           
         
    

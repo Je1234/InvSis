@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('ini')->middleware('role:admin|cliente');
 
 //Redireccionamiento a vista index categorias
+Route::get('/Perfil de usuario', 'HomeController@indexPerfil')->name('perfil');
+
+//Redireccionamiento a vista index categorias
 Route::get('/Categorias', 'CategoriaController@index')->name('categorias');
 
 //Recursos para CRUD categorias

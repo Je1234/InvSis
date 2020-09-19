@@ -25,8 +25,8 @@ class VentaController extends Controller
     public function index()
     {   $ventas = ventas::where('id_user',Auth::user()->id)->with('products')->paginate(5);
         $tipos =DB::table('tipo_documentos')->get();
-        $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
-        $clientes =DB::table('clientes')->where('id_user',Auth::user()->id)->get();
+        $products =DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $clientes =DB::table('clientes')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
 
         $metodos =DB::table('metodo_pagos')->get();
      
@@ -217,17 +217,18 @@ class VentaController extends Controller
         $delete = $id->all();
 
         $ventas = ventas::findOrFail($id->id_venta);
-        $clientes =DB::table('clientes')->get();
-        
+        $clientes =DB::table('clientes')->whereNull('deleted_at')->get();
+        $fecha = date('m-d-Y');
         $PdfV= PDF::loadView('ventas.VentaPdf', compact('ventas','ventaR','clientes'));
-        return $PdfV->download('venta.pdf');
+        return $PdfV->download('venta_'.$fecha.'_N°'.$ventas->id_venta.'.pdf');
            
     }
     
-    public function descargaExcel()
-    {    
- 
-        return Excel::download(new VentasExport, 'Venta.xlsx');
+    public function descargaExcel(Request $id)
+    {
+        $ventas = ventas::findOrFail($id->id_venta);
+        $fecha = date('m-d-Y');
+        return Excel::download(new VentasExport, 'Venta_'.$fecha.'_N°'.$ventas->id_venta.'.xlsx');
            
     }
 

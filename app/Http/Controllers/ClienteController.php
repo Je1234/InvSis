@@ -16,12 +16,17 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $tipoB=$request->get('tipo');
         $busqueda=$request->get('buscarPor');
         $variablesurl = $request->only(['tipo','buscarPor']);
-        $clientes= clientes::where('id_user',Auth::user()->id)->paginate(5);
+        $clientes= clientes::where('id_user',Auth::user()->id)->whereNull('deleted_at')->paginate(5);
         $tipos=DB::table('tipo_documentos')->get();
         $clientesB = clientes::buscar($tipoB, $busqueda)->where('id_user',Auth::user()->id)->paginate(10)->appends($variablesurl);
 

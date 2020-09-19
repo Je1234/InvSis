@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 class PlanesUsuarios extends Command
 {
@@ -45,20 +46,26 @@ class PlanesUsuarios extends Command
         foreach($user as $s){
            $prueba[]= $s->fecha_inicio;
             
-            if($s->tipo_plan == 'basico' &&  $s->fecha_inicio->addDays(90)->toDateString() == $FechaActual){
+            if($s->tipo_plan == 'basico' &&  $s->fecha_inicio->addDays(90)->toDateString() >= $FechaActual){
 
-                $userD= User::find($s->id);
+                $userD= User::findOrFail($s->id);
+                Auth::setUser($userD);
+                Auth::logout();
                 $userD->delete();
             
-            }elseif($s->tipo_plan == 'medio' &&  $s->fecha_inicio->addDays(182)->toDateString() == $FechaActual){
+            }elseif($s->tipo_plan == 'medio' &&  $s->fecha_inicio->addDays(182)->toDateString() >= $FechaActual){
 
-                $userD= User::find($s->id);
+                $userD= User::findOrFail($s->id);
+                Auth::setUser($userD);
+                Auth::logout();
                 $userD->delete();
                
 
-            }elseif($s->tipo_plan == 'completo' &&  $s->fecha_inicio->addDays(364)->toDateString() == $FechaActual){
+            }elseif($s->tipo_plan == 'completo' &&  $s->fecha_inicio->addDays(364)->toDateString() >= $FechaActual){
 
-                $userD= User::find($s->id);
+                $userD= User::findOrFail($s->id);
+                Auth::setUser($userD);
+                Auth::logout();
                 $userD->delete();
           
 

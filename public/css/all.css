@@ -96,6 +96,10 @@ body.dark ul li {
   color:white;
 } 
 
+body.dark footer {
+  color:white;
+}
+
 body.dark .card-header .modal-content{
     background:#23272A;
     
@@ -2396,7 +2400,7 @@ pre code {
     display: block;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch !important;
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 
@@ -2453,6 +2457,12 @@ pre code {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+
+}
+
+.table-responsive .table {
+  max-width: none;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 .table-responsive>.table-bordered {

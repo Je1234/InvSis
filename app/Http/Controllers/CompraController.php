@@ -19,13 +19,19 @@ class CompraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $compra = compras::where('id_user',Auth::user()->id)->with('relacion')->paginate(5);
-        $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
-        $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
-        $categoria =DB::table('categorias')->where('id_user',Auth::user()->id)->get();
-        $ubicacion =DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
+        $products =DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $categoria =DB::table('categorias')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $ubicacion =DB::table('ubicaciones')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
 
         $metodos =DB::table('metodo_pagos')->get();
 
@@ -61,10 +67,12 @@ class CompraController extends Controller
             $stockA = DB::table('productos')
             ->select('stock')
             ->where('id_producto',  $products[$i])
+            ->whereNull('deleted_at')
             ->first();
            
            DB::table('productos')
             ->where('id_producto', $products[$i])
+            ->whereNull('deleted_at')
             ->update(array('stock' => $stockA->stock + $quantities[$i]));
             
             
@@ -101,7 +109,7 @@ class CompraController extends Controller
             $proveedores = $request->all();
            proveedores::create($proveedores);
 
-           $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
+           $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
            $lista = view('compras.ListaProveedores', compact('proveedores'))->render();
            
            $utf8_ansi2 = array(
@@ -163,7 +171,7 @@ class CompraController extends Controller
 
 
             productos::create($entrada);
-            $products =DB::table('productos')->where('id_user',Auth::user()->id)->get();
+            $products =DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
         $lista = view('compras.ListaProductos', compact('products'))->render();
 
             $utf8_ansi2 = array(
@@ -227,20 +235,22 @@ class CompraController extends Controller
      */
     public function descargaPDF(Request $id)
     {
-        $compraR = compras::with('relacion')->get();
+        $compraR = compras::with('relacion')->where('id_user',Auth::user()->id)->get();
         $delete = $id->all();
 
         $compras = compras::findOrFail($id->id_compra);
-        $proveedores =DB::table('proveedores')->get();
+        $proveedores =DB::table('proveedores')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $fecha = date('m-d-Y');
         
         $PdfC= PDF::loadView('compras.CompraPdf', compact('compras','compraR','proveedores'));
-        return $PdfC->download('compra.pdf');       
+        return $PdfC->download('compra_'.$fecha.'_N°'.$compras->id_compra.'.pdf');       
        
     }
-    public function descargaExcel()
+    public function descargaExcel(Request $id)
     {      
-       
-        return Excel::download(new ComprasExport, 'compra.xlsx');
+        $fecha = date('m-d-Y');
+        $compras = compras::findOrFail($id->id_compra);
+        return Excel::download(new ComprasExport, 'compra_'.$fecha.'_N°'.$compras->id_compra.'.xlsx');
            
     }
 

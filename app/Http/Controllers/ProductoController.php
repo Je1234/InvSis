@@ -30,9 +30,9 @@ class ProductoController extends Controller
             
         $producto = productos::where('id_user',Auth::user()->id)->paginate(5);
 
-        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
-        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
-        $proveedor = DB::table('proveedores')->where('id_user',Auth::user()->id)->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $proveedor = DB::table('proveedores')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
              
        
         return view('productos.ProductoIndex', compact('producto','categoria','ubicacion','tipo','busqueda','productoB','proveedor'));
@@ -174,8 +174,8 @@ class ProductoController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'nombre' => 'required|max:80',
-            'precio_venta' => 'nullable|digits_between:1,10',
-            'precio_compra' => 'nullable|digits_between:1,10',
+            'precio_venta' => 'nullable|digits_between:1,15',
+            'precio_compra' => 'nullable|digits_between:1,15',
             'stock' => 'nullable|digits_between:1,11',
             'marca' => 'nullable|max:60',
             'ruta_imagen' => 'nullable|mimes:jpeg,jpg,png|max:5000'

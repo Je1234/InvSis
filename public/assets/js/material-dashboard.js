@@ -16,9 +16,9 @@
  */
 
 
-
 $('.form-submit-limit').on('submit',function (){
   $('.button-submit-limit').attr('disabled','true');
+  
 });
 
 

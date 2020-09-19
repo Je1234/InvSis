@@ -14,6 +14,11 @@ class UbicacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         $nombre=$request->get('buscarNom');
@@ -37,13 +42,13 @@ class UbicacionController extends Controller
         $nombre=$request->get('buscarNom');
         $variableurl = $request->only(['buscarNom']);
         
-        $products = DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $products = DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
 
-        $proveedor = DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $proveedor = DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
         
         
-        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
-        $ubicacionP = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $ubicacionP = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
 
         $ubicacionB= ubicaciones::buscarub($nombre)->where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5,['*'], 'prov')->appends($variableurl);
         $ubicacion= ubicaciones::where('id_user',Auth::user()->id)->onlyTrashed()->paginate(5); 

@@ -81,17 +81,21 @@
 <div class="row">
   ​
   <div class="col-xs-12 col-md-12 error404 mt-5 text-center">
+
     <h1>
 
       <small>¡Bienvenido {{Auth::User()->name}}!</small>
 
+
+
     </h1>
     <h2>InvSis</h2>
+
     @role('admin')
     <a type="button" href="{{route('Permisos')}}" class="btn btn-primary"><i class="material-icons">hourglass_full</i>Actualizar roles y permisos </a>
     @endrole
   </div>
-
+  
 </div>
 </div>
 

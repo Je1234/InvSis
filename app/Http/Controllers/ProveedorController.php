@@ -18,16 +18,17 @@ class ProveedorController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index(Request $request)
     {
         $nombre=$request->get('buscarNom');
         $variableurl = $request->only(['buscarNom']);
         
-        $products = DB::table('productos')->where('id_user',Auth::user()->id)->get();
+        $products = DB::table('productos')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
         
         
-        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->get();
-        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->get();
+        $categoria = DB::table('categorias')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
+        $ubicacion = DB::table('ubicaciones')->where('id_user',Auth::user()->id)->whereNull('deleted_at')->get();
 
         $proveedorB= proveedores::buscarp($nombre)->where('id_user',Auth::user()->id)->paginate(5,['*'], 'prov')->appends($variableurl);
         $proveedor= proveedores::where('id_user',Auth::user()->id)->paginate(5); 

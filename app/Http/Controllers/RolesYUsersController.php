@@ -13,6 +13,10 @@ class RolesYUsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
     public function index()
     {
         $users=User::with('roles')->paginate(5);
